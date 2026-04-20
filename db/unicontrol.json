@@ -1,0 +1,162 @@
+{
+  "users": [
+    {
+      "id": "admin001",
+      "login": "admin",
+      "senha": "admin123",
+      "nome": "Administrador",
+      "perfil": "admin",
+      "perms": [
+        "dashboard",
+        "controle",
+        "funcionarios",
+        "departamentos",
+        "pecas",
+        "usuarios",
+        "config"
+      ]
+    },
+    {
+      "id": "ger001",
+      "login": "gerente",
+      "senha": "1234",
+      "nome": "Gerente",
+      "perfil": "gerente",
+      "perms": [
+        "dashboard",
+        "controle",
+        "funcionarios",
+        "departamentos",
+        "pecas"
+      ]
+    }
+  ],
+  "entregas": [
+    {
+      "id": 1,
+      "funcionario": "João da Silva",
+      "departamento": "Cozinha",
+      "peca": "Calça",
+      "tamanho": "M",
+      "estilo": "Masculino",
+      "recebimento": "2026-04-02",
+      "devolucao": "2026-07-01",
+      "obs": ""
+    },
+    {
+      "id": 2,
+      "funcionario": "Maria Souza",
+      "departamento": "Atendimento",
+      "peca": "Camisa",
+      "tamanho": "M",
+      "estilo": "Feminino",
+      "recebimento": "2026-04-05",
+      "devolucao": "2026-07-05",
+      "obs": ""
+    },
+    {
+      "id": 3,
+      "funcionario": "Letícia Lopes",
+      "departamento": "Gestão",
+      "peca": "Camisa",
+      "tamanho": "M",
+      "estilo": "Feminino",
+      "recebimento": "2026-04-10",
+      "devolucao": "2026-04-01",
+      "obs": ""
+    },
+    {
+      "id": 4,
+      "funcionario": "João da Silva",
+      "departamento": "Cozinha",
+      "peca": "Bota",
+      "tamanho": "42",
+      "estilo": "Masculino",
+      "recebimento": "2026-03-15",
+      "devolucao": "2026-06-15",
+      "obs": ""
+    }
+  ],
+  "funcionarios": [
+    {
+      "id": 1,
+      "nome": "João da Silva",
+      "departamento": "Cozinha",
+      "matricula": "",
+      "cpf": ""
+    },
+    {
+      "id": 2,
+      "nome": "Maria Souza",
+      "departamento": "Atendimento",
+      "matricula": "",
+      "cpf": ""
+    },
+    {
+      "id": 3,
+      "nome": "Letícia Lopes",
+      "departamento": "Gestão",
+      "matricula": "",
+      "cpf": ""
+    }
+  ],
+  "departamentos": [
+    {
+      "id": 1,
+      "nome": "Cozinha"
+    },
+    {
+      "id": 2,
+      "nome": "Atendimento"
+    },
+    {
+      "id": 3,
+      "nome": "Gestão"
+    }
+  ],
+  "pecas": [
+    {
+      "id": 1,
+      "nome": "Calça",
+      "tamanho": "M",
+      "estilo": "Feminino",
+      "departamento": "Cozinha"
+    },
+    {
+      "id": 2,
+      "nome": "Calça",
+      "tamanho": "M",
+      "estilo": "Masculino",
+      "departamento": "Cozinha"
+    },
+    {
+      "id": 3,
+      "nome": "Camisa",
+      "tamanho": "M",
+      "estilo": "Masculino",
+      "departamento": "Atendimento"
+    },
+    {
+      "id": 4,
+      "nome": "Camisa",
+      "tamanho": "M",
+      "estilo": "Feminino",
+      "departamento": "Gestão"
+    },
+    {
+      "id": 5,
+      "nome": "Bota",
+      "tamanho": "38",
+      "estilo": "Feminino",
+      "departamento": "Cozinha"
+    }
+  ],
+  "devolvidos": [],
+  "config": {},
+  "nid": {
+    "dep": 4,
+    "func": 4,
+    "peca": 6,
+    "ent": 5
+  }
+}
