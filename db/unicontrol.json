@@ -152,7 +152,13 @@
     }
   ],
   "devolvidos": [],
-  "config": {},
+  "config": {
+    "empresa": "VICTRIA COMERCIO",
+    "cnpj": "10.637.470/0001-14",
+    "endereco": "RQWR",
+    "responsavel": "CVP",
+    "termo": "AFADFA"
+  },
   "nid": {
     "dep": 4,
     "func": 4,
