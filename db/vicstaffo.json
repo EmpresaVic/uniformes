@@ -10,6 +10,16 @@
       "perfil": "superadmin",
       "empresas": [],
       "perms": null
+    },
+    {
+      "id": "u1777332119307",
+      "nome": "victria",
+      "login": "victria",
+      "senhaHash": "56cfd04c",
+      "senha": "victria123",
+      "perfil": "admin",
+      "empresas": [],
+      "permissoes": null
     }
   ],
   "users": [
