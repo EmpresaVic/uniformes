@@ -164,5 +164,24 @@
     "func": 4,
     "peca": 6,
     "ent": 5
-  }
+  },
+  "empresas": [
+    {
+      "id": "emp1777326953996",
+      "nome": "Victria Comercio de Alimentos",
+      "cnpj": "10.637.470/0001-14",
+      "endereco": "Av dos Autonomistas, 1400 Loja ff02"
+    }
+  ],
+  "usuarios": [
+    {
+      "id": "super",
+      "login": "super",
+      "nome": "Super Admin",
+      "senhaHash": "-63bd2729",
+      "perfil": "superadmin",
+      "empresas": [],
+      "perms": null
+    }
+  ]
 }
