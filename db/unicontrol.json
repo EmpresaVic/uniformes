@@ -193,7 +193,8 @@
       "senhaHash": "-63bd2729",
       "perfil": "superadmin",
       "empresas": [],
-      "perms": null
+      "perms": null,
+      "senha": "super123"
     },
     {
       "id": "u1777327050352",
