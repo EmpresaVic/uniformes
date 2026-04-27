@@ -1,5 +1,12 @@
 {
-  "empresas": [],
+  "empresas": [
+    {
+      "id": "emp1777332264087",
+      "nome": "Victria Comercio de Alimentos Ltda",
+      "cnpj": "10.637.470/0001-14",
+      "endereco": "Av dos Autonomistas , 1400 - Loja ff02"
+    }
+  ],
   "usuarios": [
     {
       "id": "super",
