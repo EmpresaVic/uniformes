@@ -213,6 +213,24 @@
       "empresas": [
         "emp1777327010580"
       ]
+    },
+    {
+      "id": "u1777327094506",
+      "login": "victria",
+      "nome": "victria",
+      "senhaHash": "56cfd04c",
+      "senha": "victria123",
+      "perfil": "gerente",
+      "perms": [
+        "dashboard",
+        "controle",
+        "funcionarios",
+        "departamentos",
+        "pecas"
+      ],
+      "empresas": [
+        "emp1777326953996"
+      ]
     }
   ]
 }
