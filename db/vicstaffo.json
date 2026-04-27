@@ -207,5 +207,28 @@
     "func": 4,
     "peca": 6,
     "ent": 5
+  },
+  "emp_emp1777332327243_users": [],
+  "emp_emp1777332327243_entregas": [],
+  "emp_emp1777332327243_funcionarios": [
+    {
+      "id": 1,
+      "nome": "Murilo Rodrigues Ferraz de Oliveira",
+      "departamento": "Atendimento",
+      "status": "ativo",
+      "nascimento": "0008-12-31",
+      "admissao": "2026-02-08",
+      "cpf": ""
+    }
+  ],
+  "emp_emp1777332327243_departamentos": [],
+  "emp_emp1777332327243_pecas": [],
+  "emp_emp1777332327243_devolvidos": [],
+  "emp_emp1777332327243_config": {},
+  "emp_emp1777332327243_nid": {
+    "dep": 1,
+    "func": 2,
+    "peca": 1,
+    "ent": 1
   }
 }
