@@ -194,6 +194,25 @@
       "perfil": "superadmin",
       "empresas": [],
       "perms": null
+    },
+    {
+      "id": "u1777327050352",
+      "login": "victrus",
+      "nome": "Victrus",
+      "senhaHash": "57811906",
+      "senha": "victrus123",
+      "perfil": "gerente",
+      "perms": [
+        "dashboard",
+        "controle",
+        "funcionarios",
+        "departamentos",
+        "pecas",
+        "config"
+      ],
+      "empresas": [
+        "emp1777327010580"
+      ]
     }
   ]
 }
