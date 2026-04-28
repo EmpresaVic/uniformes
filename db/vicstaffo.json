@@ -255,13 +255,17 @@
     {
       "id": 1,
       "nome": "Cozinha"
+    },
+    {
+      "id": 2,
+      "nome": "Atendimento"
     }
   ],
   "emp_emp1777332327243_pecas": [],
   "emp_emp1777332327243_devolvidos": [],
   "emp_emp1777332327243_config": {},
   "emp_emp1777332327243_nid": {
-    "dep": 2,
+    "dep": 3,
     "func": 2,
     "peca": 1,
     "ent": 1
