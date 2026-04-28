@@ -444,13 +444,21 @@
       "nome": "Gestao"
     }
   ],
-  "emp_emp1777332264087_pecas": [],
+  "emp_emp1777332264087_pecas": [
+    {
+      "id": 1,
+      "nome": "Camisa",
+      "tamanho": "P",
+      "estilo": "Masculino",
+      "departamento": "Atendimento"
+    }
+  ],
   "emp_emp1777332264087_devolvidos": [],
   "emp_emp1777332264087_config": {},
   "emp_emp1777332264087_nid": {
     "dep": 4,
     "func": 1,
-    "peca": 1,
+    "peca": 2,
     "ent": 1
   }
 }
