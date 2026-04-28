@@ -472,6 +472,13 @@
       "tamanho": "GG",
       "estilo": "Masculino",
       "departamento": "Atendimento"
+    },
+    {
+      "id": 5,
+      "nome": "Camisa",
+      "tamanho": "P",
+      "estilo": "Unissex",
+      "departamento": "Cozinha"
     }
   ],
   "emp_emp1777332264087_devolvidos": [],
@@ -479,7 +486,7 @@
   "emp_emp1777332264087_nid": {
     "dep": 4,
     "func": 1,
-    "peca": 5,
+    "peca": 6,
     "ent": 1
   }
 }
