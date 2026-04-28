@@ -321,6 +321,13 @@
       "tamanho": "GG",
       "estilo": "Feminino",
       "departamento": "Atendimento"
+    },
+    {
+      "id": 9,
+      "nome": "Camisa",
+      "tamanho": "P",
+      "estilo": "Masculino",
+      "departamento": "Atendimento"
     }
   ],
   "emp_emp1777332327243_devolvidos": [],
@@ -328,7 +335,7 @@
   "emp_emp1777332327243_nid": {
     "dep": 4,
     "func": 2,
-    "peca": 9,
+    "peca": 10,
     "ent": 1
   }
 }
