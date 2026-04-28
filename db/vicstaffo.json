@@ -370,6 +370,13 @@
       "tamanho": "GG",
       "estilo": "Unissex",
       "departamento": "Cozinha"
+    },
+    {
+      "id": 16,
+      "nome": "Sapato Seguranca",
+      "tamanho": "34",
+      "estilo": "Unissex",
+      "departamento": ""
     }
   ],
   "emp_emp1777332327243_devolvidos": [],
@@ -377,7 +384,7 @@
   "emp_emp1777332327243_nid": {
     "dep": 4,
     "func": 2,
-    "peca": 16,
+    "peca": 17,
     "ent": 1
   }
 }
