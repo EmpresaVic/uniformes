@@ -451,6 +451,13 @@
       "tamanho": "P",
       "estilo": "Masculino",
       "departamento": "Atendimento"
+    },
+    {
+      "id": 2,
+      "nome": "Camisa",
+      "tamanho": "M",
+      "estilo": "Masculino",
+      "departamento": "Atendimento"
     }
   ],
   "emp_emp1777332264087_devolvidos": [],
@@ -458,7 +465,7 @@
   "emp_emp1777332264087_nid": {
     "dep": 4,
     "func": 1,
-    "peca": 2,
+    "peca": 3,
     "ent": 1
   }
 }
