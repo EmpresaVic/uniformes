@@ -42,9 +42,9 @@
       ],
       "permissoes": {
         "controle": true,
-        "dashboard": false,
-        "funcionarios": false,
-        "pecas": false,
+        "dashboard": true,
+        "funcionarios": true,
+        "pecas": true,
         "usuarios": false
       }
     },
