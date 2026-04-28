@@ -58,7 +58,13 @@
       "empresas": [
         "emp1777332327243"
       ],
-      "permissoes": null
+      "permissoes": {
+        "controle": true,
+        "dashboard": true,
+        "funcionarios": true,
+        "pecas": true,
+        "usuarios": false
+      }
     }
   ],
   "users": [
