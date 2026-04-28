@@ -465,6 +465,13 @@
       "tamanho": "G",
       "estilo": "Masculino",
       "departamento": "Atendimento"
+    },
+    {
+      "id": 4,
+      "nome": "Camisa",
+      "tamanho": "GG",
+      "estilo": "Masculino",
+      "departamento": "Atendimento"
     }
   ],
   "emp_emp1777332264087_devolvidos": [],
@@ -472,7 +479,7 @@
   "emp_emp1777332264087_nid": {
     "dep": 4,
     "func": 1,
-    "peca": 4,
+    "peca": 5,
     "ent": 1
   }
 }
