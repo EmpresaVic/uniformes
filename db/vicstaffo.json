@@ -251,12 +251,17 @@
       "cpf": ""
     }
   ],
-  "emp_emp1777332327243_departamentos": [],
+  "emp_emp1777332327243_departamentos": [
+    {
+      "id": 1,
+      "nome": "Cozinha"
+    }
+  ],
   "emp_emp1777332327243_pecas": [],
   "emp_emp1777332327243_devolvidos": [],
   "emp_emp1777332327243_config": {},
   "emp_emp1777332327243_nid": {
-    "dep": 1,
+    "dep": 2,
     "func": 2,
     "peca": 1,
     "ent": 1
