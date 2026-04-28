@@ -39,6 +39,18 @@
       "perfil": "admin",
       "empresas": [],
       "permissoes": null
+    },
+    {
+      "id": "u1777334523400",
+      "nome": "victrus",
+      "login": "victrus",
+      "senhaHash": "57811906",
+      "senha": "victrus123",
+      "perfil": "admin",
+      "empresas": [
+        "emp1777332327243"
+      ],
+      "permissoes": null
     }
   ],
   "users": [
