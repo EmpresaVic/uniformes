@@ -556,6 +556,13 @@
       "tamanho": "38",
       "estilo": "Feminino",
       "departamento": "Atendimento"
+    },
+    {
+      "id": 17,
+      "nome": "Calca",
+      "tamanho": "40",
+      "estilo": "Feminino",
+      "departamento": "Atendimento"
     }
   ],
   "emp_emp1777332264087_devolvidos": [],
@@ -563,7 +570,7 @@
   "emp_emp1777332264087_nid": {
     "dep": 4,
     "func": 1,
-    "peca": 17,
+    "peca": 18,
     "ent": 1
   }
 }
