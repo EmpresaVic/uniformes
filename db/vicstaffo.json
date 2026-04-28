@@ -161,6 +161,10 @@
     {
       "id": 3,
       "nome": "Gestão"
+    },
+    {
+      "id": 4,
+      "nome": "Administracao"
     }
   ],
   "pecas": [
@@ -203,7 +207,7 @@
   "devolvidos": [],
   "config": {},
   "nid": {
-    "dep": 4,
+    "dep": 5,
     "func": 4,
     "peca": 6,
     "ent": 5
