@@ -363,6 +363,13 @@
       "tamanho": "G",
       "estilo": "Unissex",
       "departamento": "Cozinha"
+    },
+    {
+      "id": 15,
+      "nome": "Camisa",
+      "tamanho": "GG",
+      "estilo": "Unissex",
+      "departamento": "Cozinha"
     }
   ],
   "emp_emp1777332327243_devolvidos": [],
@@ -370,7 +377,7 @@
   "emp_emp1777332327243_nid": {
     "dep": 4,
     "func": 2,
-    "peca": 15,
+    "peca": 16,
     "ent": 1
   }
 }
