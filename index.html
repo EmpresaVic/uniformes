@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>UniControl — Gestão de Uniformes</title>
+<title>VicStaffo — Gestão de Uniformes : Multi-Empresa</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -243,22 +243,39 @@ tr.row-vencido td{background:rgba(192,74,58,.04)!important}
 <!-- ═══ LOGIN ═══ -->
 <div id="login-screen">
   <div class="login-box">
-    <div class="login-logo">Uni<span>Control</span></div>
-    <div class="login-sub">Gestão de Uniformes</div>
+    <div class="login-logo">Vic<span>Staffo</span></div>
+    <div class="login-sub">Gestão de Uniformes : Multi-Empresa</div>
     <div class="login-gh-bar">
       <span id="login-gh-txt">⚠️ GitHub não configurado</span>
       <button class="login-gh-btn" onclick="abrirGHConfig()">⚙️ Configurar</button>
     </div>
+    <!-- Badge superadmin — aparece ao digitar 'super' -->
+    <div id="login-superadmin-hint" style="display:none;background:linear-gradient(135deg,rgba(122,74,154,.12),rgba(160,120,40,.10));border:1px solid rgba(122,74,154,.3);border-radius:10px;padding:10px 14px;margin-bottom:14px;display:none;align-items:center;gap:10px;">
+      <div style="font-size:22px">🛡️</div>
+      <div>
+        <div style="font-size:.75rem;font-weight:700;color:#7a4a9a;">Modo Super Administrador</div>
+        <div style="font-size:.65rem;color:var(--text2);margin-top:2px;">Acesso total a todas as empresas do sistema</div>
+      </div>
+    </div>
     <div class="login-field">
       <label>Usuário</label>
-      <input type="text" class="login-input" id="login-user" placeholder="Digite seu usuário" autocomplete="username" onkeydown="if(event.key==='Enter')document.getElementById('login-pass').focus()">
+      <input type="text" class="login-input" id="login-user" placeholder="Digite seu usuário" autocomplete="username"
+        onkeydown="if(event.key==='Enter')document.getElementById('login-pass').focus()"
+        oninput="var v=this.value.trim().toLowerCase();var h=document.getElementById('login-superadmin-hint');h.style.display=v==='super'?'flex':'none';">
     </div>
     <div class="login-field">
       <label>Senha</label>
       <input type="password" class="login-input" id="login-pass" placeholder="Digite sua senha" autocomplete="current-password" onkeydown="if(event.key==='Enter')fazerLogin()">
     </div>
+    <div class="login-field" id="login-empresa-row" style="display:none">
+      <label>Selecione a Empresa</label>
+      <select class="login-input" id="login-empresa" style="letter-spacing:0;font-size:13px;"></select>
+    </div>
     <div class="login-error" id="login-error"></div>
     <button class="login-btn" id="login-btn" onclick="fazerLogin()">🔑 Entrar</button>
+    <div style="margin-top:16px;padding-top:14px;border-top:1px solid var(--border);text-align:center;">
+      <div style="font-size:.62rem;color:var(--text3);">Super Admin: usuário <strong>super</strong> / senha <strong>super123</strong></div>
+    </div>
   </div>
 </div>
 
@@ -267,15 +284,22 @@ tr.row-vencido td{background:rgba(192,74,58,.04)!important}
   <div class="logo-wrap">
     <div class="logo-mark">👔</div>
     <div>
-      <div class="logo-name">UniControl</div>
-      <div class="logo-sub">Gestão de Uniformes</div>
+      <div class="logo-name">VicStaffo</div>
+      <div class="logo-sub">Gestão de Uniformes : Multi-Empresa</div>
     </div>
   </div>
   <nav class="nav" id="main-nav"><!-- built by buildNav() --></nav>
   <div class="header-right">
     <span class="gh-status-mini" id="gh-status">⚠️ GitHub não configurado</span>
+    <div id="header-empresa-switcher" style="display:none;align-items:center;gap:8px;background:rgba(122,74,154,.08);border:1px solid rgba(122,74,154,.2);border-radius:8px;padding:5px 10px;">
+      <span style="font-size:.62rem;font-weight:700;color:#7a4a9a;">🛡️ Empresa:</span>
+      <select id="super-empresa-sel" onchange="superTrocarEmpresa(this.value)" style="background:transparent;border:none;color:var(--text);font-family:'DM Sans',sans-serif;font-size:.72rem;font-weight:600;outline:none;max-width:180px;cursor:pointer;">
+        <option value="">🌐 Todas as empresas</option>
+      </select>
+    </div>
     <div class="header-user">
       <span class="header-uname" id="user-display">—</span>
+      <span id="header-empresa-nome" style="font-size:.62rem;color:var(--text2);white-space:nowrap;"></span>
       <button class="btn-logout" onclick="fazerLogout()">Sair</button>
       <button class="btn btn-ghost btn-xs" onclick="abrirGHConfig()" title="GitHub">⚙️</button>
     </div>
@@ -300,6 +324,21 @@ tr.row-vencido td{background:rgba(192,74,58,.04)!important}
 
     <!-- ── DASHBOARD ── -->
     <div class="page active" id="page-dashboard">
+
+      <!-- Painel de visão geral — só superadmin sem empresa filtrada -->
+      <div id="sa-overview" style="display:none;margin-bottom:22px;">
+        <div style="background:linear-gradient(135deg,rgba(122,74,154,.08),rgba(160,120,40,.06));border:1px solid rgba(122,74,154,.2);border-radius:var(--r);padding:20px 24px;margin-bottom:16px;">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;">
+            <div style="width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#7a4a9a,#a07828);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;">🛡️</div>
+            <div>
+              <div style="font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:#7a4a9a;">Visão Geral — Todas as Empresas</div>
+              <div style="font-size:.68rem;color:var(--text2);margin-top:2px;">Selecione uma empresa no menu acima para filtrar os dados</div>
+            </div>
+          </div>
+          <div id="sa-empresas-cards" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;"></div>
+        </div>
+      </div>
+
       <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:20px">
         <div style="font-size:.78rem;color:var(--text2)" id="dash-mes-label"></div>
         <div class="month-nav-bar">
@@ -401,31 +440,56 @@ tr.row-vencido td{background:rgba(192,74,58,.04)!important}
 
     <!-- ── FUNCIONÁRIOS ── -->
     <div class="page" id="page-funcionarios">
-      <div class="sec-head">
-        <div></div>
+      <div class="filter-bar">
+        <div class="sbox" style="width:220px">🔍<input type="text" id="search-func" placeholder="Buscar funcionário…" oninput="renderFuncionarios()"></div>
+        <select class="fsel" id="fil-func-setor" onchange="renderFuncionarios()">
+          <option value="">Todos os setores</option>
+          <option value="Atendimento">Atendimento</option>
+          <option value="Cozinha">Cozinha</option>
+          <option value="Gestão">Gestão</option>
+        </select>
+        <select class="fsel" id="fil-func-status" onchange="renderFuncionarios()">
+          <option value="">Todos os status</option>
+          <option value="ativo">Ativo</option>
+          <option value="inativo">Inativo</option>
+        </select>
         <button class="btn btn-primary" onclick="openModalFunc()">＋ Novo Funcionário</button>
       </div>
-      <div class="cad-grid" id="func-grid"></div>
+      <div class="card">
+        <table>
+          <thead><tr>
+            <th>Nome</th><th>Setor</th><th>CPF</th><th>Nascimento</th><th>Admissão</th><th>Status</th><th>Ações</th>
+          </tr></thead>
+          <tbody id="func-table"></tbody>
+        </table>
+      </div>
     </div>
 
-    <!-- ── DEPARTAMENTOS ── -->
+    <!-- ── SETORES ── -->
     <div class="page" id="page-departamentos">
       <div class="sec-head">
-        <div></div>
-        <button class="btn btn-primary" onclick="openModalDepto()">＋ Novo Departamento</button>
+        <div><span style="font-size:.78rem;color:var(--text2)">Setores de trabalho cadastrados no sistema</span></div>
+        <button class="btn btn-primary" onclick="openModalDepto()">＋ Novo Setor</button>
       </div>
       <div class="cad-grid" id="depto-grid"></div>
     </div>
 
     <!-- ── PEÇAS ── -->
     <div class="page" id="page-pecas">
-      <div class="sec-head">
-        <div></div>
+      <div class="filter-bar">
+        <div class="sbox" style="width:220px">🔍<input type="text" id="search-peca" placeholder="Buscar peça…" oninput="renderPecas()"></div>
+        <select class="fsel" id="fil-peca-setor" onchange="renderPecas()">
+          <option value="">Todos os setores</option>
+        </select>
         <button class="btn btn-primary" onclick="openModalPeca()">＋ Nova Peça</button>
       </div>
       <div class="card">
+        <div class="card-head">
+          <div class="card-title">🧥 Peças de Uniforme</div>
+          <span id="peca-count" style="font-size:.7rem;color:var(--text2)">0 peças</span>
+        </div>
         <table>
-          <thead><tr><th>Peça</th><th>Tamanho</th><th>Estilo</th><th>Departamento</th><th>Ações</th></tr></thead>
+          <thead><tr><th>Peça</th><th>Tamanho</th><th>Estilo</th><th>Setor</th><th>Ações</th></tr></thead>
           <tbody id="peca-table"></tbody>
         </table>
       </div>
@@ -433,13 +497,56 @@ tr.row-vencido td{background:rgba(192,74,58,.04)!important}
 
     <!-- ── USUÁRIOS ── -->
     <div class="page" id="page-usuarios">
+      <h1 class="page-title">Gerenciar Usuários</h1>
+      <p class="page-sub">Cadastre usuários e defina as permissões de acesso por módulo.</p>
+      <div class="grid2">
+        <div class="card" style="padding:20px">
+          <div class="card-title" style="margin-bottom:14px">Novo Usuário</div>
+          <div class="field"><label>Nome de Usuário</label><input type="text" id="usr-nome" placeholder="Ex.: admin" autocomplete="off"></div>
+          <div class="field"><label>Senha</label><input type="password" id="usr-senha" placeholder="Mínimo 4 caracteres" autocomplete="new-password"></div>
+          <div class="field"><label>Confirmar Senha</label><input type="password" id="usr-senha2" placeholder="Repita a senha" autocomplete="new-password"></div>
+          <div class="field" id="usr-perfil-row">
+            <label>Perfil</label>
+            <select id="usr-perfil" onchange="onUsrPerfilChange()">
+              <option value="operador">Operador</option>
+              <option value="admin">Administrador</option>
+              <option value="superadmin" id="usr-opt-super" style="display:none;">Super Administrador</option>
+            </select>
+          </div>
+          <div class="field" id="usr-empresa-row">
+            <label>Empresas com Acesso</label>
+            <div class="perm-grid" id="usr-empresa-grid" style="max-height:180px;overflow-y:auto;">
+              <span style="font-size:12px;color:var(--text2);">Nenhuma empresa cadastrada.</span>
+            </div>
+          </div>
+          <div class="field">
+            <label>Permissões de Acesso</label>
+            <div class="perm-grid" id="perm-novo-grid">
+              <label class="perm-item"><input type="checkbox" name="perm-novo" value="controle" checked> 📋 Controle</label>
+              <label class="perm-item"><input type="checkbox" name="perm-novo" value="dashboard"> 📊 Dashboard</label>
+              <label class="perm-item"><input type="checkbox" name="perm-novo" value="funcionarios"> 👤 Funcionários</label>
+              <label class="perm-item"><input type="checkbox" name="perm-novo" value="pecas"> 🧥 Peças</label>
+              <label class="perm-item"><input type="checkbox" name="perm-novo" value="usuarios"> 🔐 Usuários</label>
+            </div>
+          </div>
+          <button class="btn btn-primary" onclick="addUsuario()">+ Adicionar Usuário</button>
+        </div>
+        <div class="card" style="padding:20px">
+          <div class="card-title" style="margin-bottom:14px">Usuários Cadastrados</div>
+          <div id="lista-usuarios"><div class="empty"><div class="empty-ico">🔐</div><div class="empty-txt">Nenhum usuário</div></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── EMPRESAS ── -->
+    <div class="page" id="page-empresas">
       <div class="sec-head">
-        <div></div>
-        <button class="btn btn-primary" onclick="openUserModal()">＋ Novo Usuário</button>
+        <div><span style="font-size:.78rem;color:var(--text2)">Gerencie as empresas do sistema</span></div>
+        <button class="btn btn-primary" onclick="openEmpresaModal()">＋ Nova Empresa</button>
       </div>
       <div class="card">
-        <div class="card-head"><div class="card-title">Usuários e Permissões</div></div>
-        <div style="padding:16px 20px" id="user-list"></div>
+        <div class="card-head"><div class="card-title">🏢 Empresas Cadastradas</div></div>
+        <div style="padding:16px 20px" id="empresa-list"></div>
       </div>
     </div>
 
@@ -479,7 +586,7 @@ tr.row-vencido td{background:rgba(192,74,58,.04)!important}
         <div class="fg"><label>Funcionário *</label>
           <select id="c-func" onchange="onFuncChange()"><option value="">Selecione…</option></select>
         </div>
-        <div class="fg"><label>Departamento</label><input type="text" id="c-depto" readonly placeholder="Auto preenchido"></div>
+        <div class="fg"><label>Setor</label><input type="text" id="c-depto" readonly placeholder="Auto preenchido"></div>
       </div>
       <div class="section-label">Uniforme</div>
       <div class="grid2" style="margin-bottom:14px">
@@ -487,7 +594,14 @@ tr.row-vencido td{background:rgba(192,74,58,.04)!important}
           <select id="c-peca" onchange="onPecaChange()"><option value="">Selecione…</option></select>
         </div>
         <div class="fg"><label>Tamanho</label><input type="text" id="c-tamanho" placeholder="Ex: M, G, 38"></div>
-        <div class="fg"><label>Estilo</label><input type="text" id="c-estilo" placeholder="Masculino / Feminino"></div>
+        <div class="fg"><label>Estilo</label>
+          <select id="c-estilo">
+            <option value="">— Selecione a peça —</option>
+            <option value="Masculino">👔 Masculino</option>
+            <option value="Unissex">👕 Unissex</option>
+            <option value="Feminino">👗 Feminino</option>
+          </select>
+        </div>
         <div class="fg"><label>Observação</label><input type="text" id="c-obs" placeholder="Opcional…"></div>
       </div>
       <div class="section-label">Datas</div>
@@ -507,17 +621,31 @@ tr.row-vencido td{background:rgba(192,74,58,.04)!important}
 
 <!-- ═══ MODAL FUNCIONÁRIO ═══ -->
 <div class="overlay" id="m-func">
-  <div class="modal" style="width:420px">
+  <div class="modal" style="width:480px">
     <div class="modal-head">
       <div><div class="modal-title">👤 Funcionário</div></div>
       <div class="mclose" onclick="closeModal('m-func')">✕</div>
     </div>
     <div class="modal-body">
-      <div style="display:flex;flex-direction:column;gap:13px">
-        <div class="fg"><label>Nome Completo *</label><input type="text" id="f-nome" placeholder="Nome completo"></div>
-        <div class="fg"><label>Departamento *</label><select id="f-depto"><option value="">Selecione…</option></select></div>
-        <div class="fg"><label>Matrícula</label><input type="text" id="f-mat" placeholder="Opcional"></div>
-        <div class="fg"><label>CPF</label><input type="text" id="f-cpf" placeholder="000.000.000-00" maxlength="14" oninput="maskCPF(this)"></div>
+      <div class="grid2" style="gap:13px">
+        <div class="fg span2"><label>Nome Completo *</label><input type="text" id="f-nome" placeholder="Nome completo"></div>
+        <div class="fg"><label>Setor *</label>
+          <select id="f-depto">
+            <option value="">Selecione…</option>
+            <option value="Atendimento">Atendimento</option>
+            <option value="Cozinha">Cozinha</option>
+            <option value="Gestão">Gestão</option>
+          </select>
+        </div>
+        <div class="fg"><label>Status *</label>
+          <select id="f-status">
+            <option value="ativo">Ativo</option>
+            <option value="inativo">Inativo</option>
+          </select>
+        </div>
+        <div class="fg"><label>Data de Nascimento</label><input type="date" id="f-nasc"></div>
+        <div class="fg"><label>Data de Admissão</label><input type="date" id="f-admissao"></div>
+        <div class="fg span2"><label>CPF</label><input type="text" id="f-cpf" placeholder="000.000.000-00" maxlength="14" oninput="maskCPF(this)"></div>
       </div>
       <input type="hidden" id="f-eid">
       <div class="form-actions">
@@ -550,15 +678,29 @@ tr.row-vencido td{background:rgba(192,74,58,.04)!important}
 <div class="overlay" id="m-peca">
   <div class="modal" style="width:460px">
     <div class="modal-head">
-      <div><div class="modal-title">🧥 Peça de Uniforme</div></div>
+      <div>
+        <div class="modal-title" id="m-peca-title">🧥 Nova Peça de Uniforme</div>
+        <div class="modal-sub">Preencha os dados da peça</div>
+      </div>
       <div class="mclose" onclick="closeModal('m-peca')">✕</div>
     </div>
     <div class="modal-body">
       <div class="grid2" style="margin-bottom:14px">
-        <div class="fg"><label>Nome da Peça *</label><input type="text" id="p-nome" placeholder="Ex: Calça"></div>
-        <div class="fg"><label>Tamanho</label><input type="text" id="p-tam" placeholder="Ex: M, G, 38"></div>
-        <div class="fg"><label>Estilo</label><input type="text" id="p-estilo" placeholder="Ex: Masculino, Feminino"></div>
-        <div class="fg"><label>Departamento</label><select id="p-depto"><option value="">Todos</option></select></div>
+        <div class="fg span2"><label>Nome da Peça *</label><input type="text" id="p-nome" placeholder="Ex: Calça, Camisa, Bota…"></div>
+        <div class="fg"><label>Tamanho</label><input type="text" id="p-tam" placeholder="Ex: P, M, G, 38"></div>
+        <div class="fg"><label>Estilo</label>
+          <select id="p-estilo">
+            <option value="">— Selecione —</option>
+            <option value="Masculino">👔 Masculino</option>
+            <option value="Unissex">👕 Unissex</option>
+            <option value="Feminino">👗 Feminino</option>
+          </select>
+        </div>
+        <div class="fg span2"><label>Setor</label>
+          <select id="p-setor">
+            <option value="">— Todos os setores —</option>
+          </select>
+        </div>
       </div>
       <input type="hidden" id="p-eid">
       <div class="form-actions">
@@ -570,31 +712,23 @@ tr.row-vencido td{background:rgba(192,74,58,.04)!important}
 </div>
 
 <!-- ═══ MODAL USUÁRIO ═══ -->
-<div class="overlay" id="m-usuario">
-  <div class="modal" style="width:520px">
+<!-- modal-edit-perm is created dynamically by editarPermissoes() -->
+
+<!-- ═══ MODAL EMPRESA ═══ -->
+<div class="overlay" id="m-empresa">
+  <div class="modal" style="width:440px">
     <div class="modal-head">
-      <div><div class="modal-title" id="mu-title">👥 Novo Usuário</div></div>
-      <div class="mclose" onclick="closeModal('m-usuario')">✕</div>
+      <div><div class="modal-title" id="me-title">🏢 Nova Empresa</div></div>
+      <div class="mclose" onclick="closeModal('m-empresa')">✕</div>
     </div>
     <div class="modal-body">
-      <div class="grid2" style="margin-bottom:14px">
-        <div class="fg"><label>Login *</label><input type="text" id="u-login" placeholder="usuario.nome"></div>
-        <div class="fg"><label>Nome Completo</label><input type="text" id="u-nome" placeholder="Nome de exibição"></div>
-        <div class="fg"><label>Senha *</label><input type="password" id="u-senha" placeholder="(deixe vazio para não alterar)"></div>
-        <div class="fg"><label>Perfil</label>
-          <select id="u-perfil" onchange="onPerfilChange()">
-            <option value="operador">Operador</option>
-            <option value="gerente">Gerente</option>
-            <option value="admin">Administrador</option>
-          </select>
-        </div>
-      </div>
-      <div class="section-label">Permissões de Acesso</div>
-      <div class="perm-grid" id="perm-grid"></div>
-      <input type="hidden" id="u-edit-id">
+      <div class="fg" style="margin-bottom:14px"><label>Nome da Empresa *</label><input type="text" id="e-nome" placeholder="Ex: Restaurante ABC LTDA"></div>
+      <div class="fg" style="margin-bottom:14px"><label>CNPJ</label><input type="text" id="e-cnpj" placeholder="00.000.000/0000-00" maxlength="18" oninput="maskCNPJ(this)"></div>
+      <div class="fg" style="margin-bottom:14px"><label>Endereço</label><input type="text" id="e-endereco" placeholder="Rua, nº — Cidade/UF"></div>
+      <input type="hidden" id="e-edit-id">
       <div class="form-actions">
-        <button class="btn btn-ghost" onclick="closeModal('m-usuario')">Cancelar</button>
-        <button class="btn btn-primary" onclick="saveUser()">💾 Salvar</button>
+        <button class="btn btn-ghost" onclick="closeModal('m-empresa')">Cancelar</button>
+        <button class="btn btn-primary" onclick="saveEmpresa()">💾 Salvar</button>
       </div>
     </div>
   </div>
@@ -606,7 +740,7 @@ tr.row-vencido td{background:rgba(192,74,58,.04)!important}
     <h3>⚙️ Configuração GitHub</h3>
     <p style="font-size:.8rem;color:var(--text2);margin-bottom:20px">Os dados serão salvos no seu repositório GitHub e ficam acessíveis em qualquer computador.</p>
     <div class="field"><label>Usuário GitHub</label><input type="text" id="gh-user" placeholder="seu-usuario"></div>
-    <div class="field"><label>Repositório</label><input type="text" id="gh-repo" placeholder="unicontrol-db"></div>
+    <div class="field"><label>Repositório</label><input type="text" id="gh-repo" placeholder="vicstaffo-db"></div>
     <div class="field"><label>Branch</label><input type="text" id="gh-branch" placeholder="main"></div>
     <div class="field"><label>Token (ghp_...)</label><input type="password" id="gh-token" placeholder="ghp_xxxxxxxxxxxx"></div>
     <div style="margin-bottom:16px"><span id="gh-test-status" style="font-size:.75rem"></span></div>
@@ -615,7 +749,7 @@ tr.row-vencido td{background:rgba(192,74,58,.04)!important}
       <button class="btn btn-ghost" onclick="fecharGHConfig()">Cancelar</button>
       <button class="btn btn-ghost-blue" onclick="limparGHConfig()" style="margin-left:auto">🗑️ Desconectar</button>
     </div>
-    <p style="font-size:.68rem;color:var(--text3);margin-top:14px">Token salvo apenas localmente. Dados em <code style="color:var(--gold)">db/unicontrol.json</code> no repositório.</p>
+    <p style="font-size:.68rem;color:var(--text3);margin-top:14px">Token salvo apenas localmente. Dados em <code style="color:var(--gold)">db/vicstaffo.json</code> no repositório.</p>
   </div>
 </div>
 
@@ -627,11 +761,15 @@ tr.row-vencido td{background:rgba(192,74,58,.04)!important}
 // ══════════════════════════════════════════════════════════════════════
 // GITHUB API + STORAGE
 // ══════════════════════════════════════════════════════════════════════
-var STORAGE_KEY = 'unicontrol_v1';
-var GH_CFG_KEY  = 'unicontrol_gh_cfg';
-var GH_FILE     = 'db/unicontrol.json';
+var STORAGE_KEY = 'vicstaffo_v1';
+var GH_CFG_KEY  = 'vicstaffo_gh_cfg';
+var GH_FILE     = 'db/vicstaffo.json';
 var _cache = {};
 var _currentSha = null;
+
+/* ── Multi-empresa ── */
+var currentUser   = null;  /* usuário logado */
+var _empresaAtiva = null;  /* { id, nome, ... } — null quando superadmin sem filtro */
 
 const GH = {
   getCfg(){ try{ return JSON.parse(localStorage.getItem(GH_CFG_KEY)||'{}'); }catch(e){ return {}; } },
@@ -658,7 +796,7 @@ const GH = {
     var c=GH.getCfg();
     var json=JSON.stringify(dados,null,2);
     var b64; try{ b64=btoa(unescape(encodeURIComponent(json))); }catch(e){ b64=btoa(json); }
-    var body={message:'UniControl — '+new Date().toLocaleString('pt-BR'),content:b64,branch:c.branch};
+    var body={message:'VicStaffo — '+new Date().toLocaleString('pt-BR'),content:b64,branch:c.branch};
     if(sha) body.sha=sha;
     var r=await fetch('https://api.github.com/repos/'+c.user+'/'+c.repo+'/contents/'+GH_FILE,
       {method:'PUT',headers:GH._headers(),body:JSON.stringify(body)});
@@ -677,9 +815,51 @@ const GH = {
   }
 };
 
+/* ── helpers de empresa ── */
+function _getEmpresas(){ var l=_cache["empresas"]; return Array.isArray(l)?JSON.parse(JSON.stringify(l)):[]; }
+function _getUsuarios(){ var l=_cache["usuarios"]; return Array.isArray(l)?JSON.parse(JSON.stringify(l)):[]; }
+function aplicarPermissoesNav(){ buildNav(); }
+function _setEmpresas(l,cb){ _cache['empresas']=l; _persistir(cb); }
+
+function _empPrefix(){
+  /* Superadmin sem empresa selecionada: prefixo vazio (dados globais) */
+  return _empresaAtiva?'emp_'+_empresaAtiva.id+'_':'';
+}
+
+function _hashSenha(s){ var h=0; for(var i=0;i<s.length;i++){ h=((h<<5)-h)+s.charCodeAt(i);h|=0; } return h.toString(16); }
+
+function _garantirSuperAdmin(){
+  if(!Array.isArray(_cache['usuarios'])) _cache['usuarios']=[];
+  var idx=_cache['usuarios'].findIndex(function(u){ return u.login==='super'; });
+  var hash=_hashSenha('super123');
+  if(idx<0){
+    _cache['usuarios'].push({id:'super',login:'super',nome:'Super Admin',senhaHash:hash,senha:'super123',perfil:'superadmin',empresas:[],perms:null});
+  } else {
+    /* Garante que perfil e hash estejam corretos */
+    _cache['usuarios'][idx].perfil='superadmin';
+    _cache['usuarios'][idx].senhaHash=hash;
+    _cache['usuarios'][idx].senha='super123';
+    if(!_cache['usuarios'][idx].nome) _cache['usuarios'][idx].nome='Super Admin';
+  }
+}
+
 const DB = {
-  get(k){ return _cache[k]!==undefined?JSON.parse(JSON.stringify(_cache[k])):null; },
-  set(k,v,cb){ _cache[k]=v; _persistir(cb); },
+  get(k){
+    var chave=_empPrefix()+k;
+    var v=_cache[chave];
+    if(!Array.isArray(v)){
+      /* migração: tenta sem prefixo */
+      if(_empPrefix()&&Array.isArray(_cache[k])){
+        _cache[chave]=JSON.parse(JSON.stringify(_cache[k]));
+        delete _cache[k]; v=_cache[chave];
+      }else{ v=null; }
+    }
+    return v!==null&&v!==undefined?JSON.parse(JSON.stringify(v)):null;
+  },
+  set(k,v,cb){
+    var chave=(k==='empresas'||k==='usuarios')?k:(_empPrefix()+k);
+    _cache[chave]=v; _persistir(cb);
+  },
   async loadAll(cb){
     if(GH.isConfigured()){
       try{
@@ -688,6 +868,9 @@ const DB = {
         else{ _loadLS(); _currentSha=r?r.sha:null; try{ _currentSha=await GH.write(_cache,_currentSha); }catch(e){} }
       }catch(e){ _loadLS(); if(cb) cb(new Error('GitHub indisponível: '+e.message)); return; }
     }else{ _loadLS(); }
+    if(!Array.isArray(_cache['empresas'])) _cache['empresas']=[];
+    if(!Array.isArray(_cache['usuarios'])) _cache['usuarios']=[];
+    _garantirSuperAdmin();
     _fixTypes();
     if(cb) cb(null);
   }
@@ -698,14 +881,18 @@ function _loadLS(){
 }
 
 function _fixTypes(){
-  if(!Array.isArray(_cache.users))         _cache.users=[];
-  if(!Array.isArray(_cache.entregas))      _cache.entregas=[];
-  if(!Array.isArray(_cache.funcionarios))  _cache.funcionarios=[];
-  if(!Array.isArray(_cache.departamentos)) _cache.departamentos=[];
-  if(!Array.isArray(_cache.pecas))         _cache.pecas=[];
-  if(!Array.isArray(_cache.devolvidos))    _cache.devolvidos=[];
-  if(!_cache.config) _cache.config={};
-  if(!_cache.nid) _cache.nid={dep:1,func:1,peca:1,ent:1};
+  if(!Array.isArray(_cache['empresas']))    _cache['empresas']=[];
+  if(!Array.isArray(_cache['usuarios']))    _cache['usuarios']=[];
+  /* dados da empresa ativa (ou global se superadmin sem prefixo) */
+  var pfx=_empPrefix();
+  if(!Array.isArray(_cache[pfx+'users']))         _cache[pfx+'users']=[];
+  if(!Array.isArray(_cache[pfx+'entregas']))      _cache[pfx+'entregas']=[];
+  if(!Array.isArray(_cache[pfx+'funcionarios']))  _cache[pfx+'funcionarios']=[];
+  if(!Array.isArray(_cache[pfx+'departamentos'])) _cache[pfx+'departamentos']=[];
+  if(!Array.isArray(_cache[pfx+'pecas']))         _cache[pfx+'pecas']=[];
+  if(!Array.isArray(_cache[pfx+'devolvidos']))    _cache[pfx+'devolvidos']=[];
+  if(!_cache[pfx+'config']) _cache[pfx+'config']={};
+  if(!_cache[pfx+'nid'])    _cache[pfx+'nid']={dep:1,func:1,peca:1,ent:1};
 }
 
 async function _persistir(cb){
@@ -734,27 +921,29 @@ async function _persistir(cb){
 }
 
 function getDB(){
+  var pfx=_empPrefix();
   return {
-    entregas:     _cache.entregas||[],
-    funcionarios: _cache.funcionarios||[],
-    departamentos:_cache.departamentos||[],
-    pecas:        _cache.pecas||[],
-    devolvidos:   _cache.devolvidos||[],
-    config:       _cache.config||{},
-    nid:          _cache.nid||{dep:1,func:1,peca:1,ent:1},
-    users:        _cache.users||[]
+    entregas:     _cache[pfx+'entregas']||[],
+    funcionarios: _cache[pfx+'funcionarios']||[],
+    departamentos:_cache[pfx+'departamentos']||[],
+    pecas:        _cache[pfx+'pecas']||[],
+    devolvidos:   _cache[pfx+'devolvidos']||[],
+    config:       _cache[pfx+'config']||{},
+    nid:          _cache[pfx+'nid']||{dep:1,func:1,peca:1,ent:1},
+    users:        _cache[pfx+'users']||[]
   };
 }
 
 function saveDB(db){
-  _cache.entregas=db.entregas;
-  _cache.funcionarios=db.funcionarios;
-  _cache.departamentos=db.departamentos;
-  _cache.pecas=db.pecas;
-  _cache.devolvidos=db.devolvidos;
-  _cache.config=db.config;
-  _cache.nid=db.nid;
-  _cache.users=db.users;
+  var pfx=_empPrefix();
+  _cache[pfx+'entregas']=db.entregas;
+  _cache[pfx+'funcionarios']=db.funcionarios;
+  _cache[pfx+'departamentos']=db.departamentos;
+  _cache[pfx+'pecas']=db.pecas;
+  _cache[pfx+'devolvidos']=db.devolvidos;
+  _cache[pfx+'config']=db.config;
+  _cache[pfx+'nid']=db.nid;
+  _cache[pfx+'users']=db.users;
   _persistir();
 }
 
@@ -815,7 +1004,7 @@ async function sincronizar(){
   });
 }
 function refreshAll(){
-  renderDashboard(); renderControle(); renderFuncionarios(); renderDepartamentos(); renderPecas(); renderUsers(); loadConfig();
+  renderDashboard(); renderControle(); renderFuncionarios(); renderDepartamentos(); renderPecas(); renderUsers(); renderEmpresas(); loadConfig();
 }
 
 // ══════════════════════════════════════════════════════════════════════
@@ -829,9 +1018,9 @@ function seed(){
   }
   if(!db.funcionarios.length){
     db.funcionarios=[
-      {id:1,nome:'João da Silva',departamento:'Cozinha',matricula:'',cpf:''},
-      {id:2,nome:'Maria Souza',departamento:'Atendimento',matricula:'',cpf:''},
-      {id:3,nome:'Letícia Lopes',departamento:'Gestão',matricula:'',cpf:''}
+      {id:1,nome:'João da Silva',departamento:'Cozinha',cpf:encryptCPF('123.456.789-09'),nascimento:'1990-05-15',admissao:'2022-01-10',status:'ativo'},
+      {id:2,nome:'Maria Souza',departamento:'Atendimento',cpf:encryptCPF('987.654.321-00'),nascimento:'1995-08-22',admissao:'2021-06-01',status:'ativo'},
+      {id:3,nome:'Letícia Lopes',departamento:'Gestão',cpf:encryptCPF('111.222.333-44'),nascimento:'1988-11-30',admissao:'2020-03-15',status:'ativo'}
     ];
     db.nid.func=4;
   }
@@ -861,6 +1050,9 @@ function seed(){
     ];
   }
   saveDB(db);
+  /* Garante superadmin no cache global */
+  _garantirSuperAdmin();
+  try{ localStorage.setItem(STORAGE_KEY,JSON.stringify(_cache)); }catch(e){}
 }
 
 // ══════════════════════════════════════════════════════════════════════
@@ -870,27 +1062,28 @@ const MODULOS=[
   {id:'dashboard',   label:'📊 Dashboard',         icon:'📊'},
   {id:'controle',    label:'📋 Controle',           icon:'📋'},
   {id:'funcionarios',label:'👤 Funcionários',       icon:'👤'},
-  {id:'departamentos',label:'🏢 Departamentos',     icon:'🏢'},
+  {id:'departamentos',label:'🏷️ Setores',           icon:'🏷️'},
   {id:'pecas',       label:'🧥 Peças',              icon:'🧥'},
   {id:'usuarios',    label:'👥 Usuários',           icon:'👥'},
+  {id:'empresas',    label:'🏢 Empresas',           icon:'🏢'},
   {id:'config',      label:'⚙️ Configurações',      icon:'⚙️'},
 ];
 const NAV_META={
   dashboard:    {title:'Dashboard',             sub:'Visão geral — selecione o mês pelo filtro'},
   controle:     {title:'Controle de Uniformes', sub:'Registro de entregas e devoluções'},
   funcionarios: {title:'Funcionários',          sub:'Cadastro de funcionários'},
-  departamentos:{title:'Departamentos',         sub:'Cadastro de departamentos'},
+  departamentos:{title:'Setores',               sub:'Gerencie os setores de trabalho da empresa'},
   pecas:        {title:'Peças de Uniforme',     sub:'Cadastro de peças e modelos'},
   usuarios:     {title:'Usuários',              sub:'Gerenciamento de acessos e permissões'},
+  empresas:     {title:'Empresas',              sub:'Gerenciamento de empresas do sistema'},
   config:       {title:'Configurações',         sub:'Dados da empresa e personalização'},
 };
-const PERFIL_LABEL={admin:'Administrador',gerente:'Gerente',operador:'Operador'};
-
-var currentUser=null;
+const PERFIL_LABEL={superadmin:'Super Admin',admin:'Administrador',gerente:'Gerente',operador:'Operador'};
 
 function hasPerm(modId){
   if(!currentUser) return false;
-  if(currentUser.perfil==='admin') return true;
+  if(currentUser.perfil==='superadmin') return true;
+  if(currentUser.perfil==='admin') return modId!=='empresas';
   return (currentUser.perms||[]).includes(modId);
 }
 
@@ -913,26 +1106,141 @@ async function fazerLogin(){
   btn.textContent='⏳ Verificando...'; btn.disabled=true;
   try{ await DB.loadAll(()=>{}); }catch(e){}
   btn.textContent='🔑 Entrar'; btn.disabled=false;
-  _fixTypes();
-  var db=getDB();
-  var user=db.users.find(u=>u.login.toLowerCase()===login&&u.senha===senha);
-  if(!user){ err.textContent='⚠️ Usuário ou senha incorretos.'; return; }
+
+  /* Verifica nos usuarios globais (novo formato) */
+  var usuariosGlobais=_cache['usuarios']||[];
+  var encontrado=null;
+  for(var i=0;i<usuariosGlobais.length;i++){
+    var u=usuariosGlobais[i];
+    var senhaOk=(u.senhaHash&&u.senhaHash===_hashSenha(senha))||(u.senha&&u.senha===senha);
+    if(u.login&&u.login.toLowerCase()===login&&senhaOk){ encontrado=u; break; }
+  }
+
+  /* Fallback: verifica nos users da empresa ativa (formato antigo) */
+  if(!encontrado){
+    _fixTypes();
+    var db=getDB();
+    var userAntigo=db.users.find(u=>u.login&&u.login.toLowerCase()===login&&u.senha===senha);
+    if(userAntigo) encontrado={...userAntigo, perfil:userAntigo.perfil||'operador', empresas:[], senhaHash:null};
+  }
+
+  if(!encontrado){ err.textContent='⚠️ Usuário ou senha incorretos.'; return; }
+
+  /* Superadmin: acesso total sem empresa */
+  if(encontrado.perfil==='superadmin'){
+    _entrarSistema(encontrado, null); return;
+  }
+
+  /* Usuário normal: verifica empresas vinculadas */
+  var empIds=encontrado.empresas||[];
+  var todasEmpresas=_getEmpresas();
+  var empresasAcesso=todasEmpresas.filter(function(e){ return empIds.indexOf(e.id)>=0; });
+
+  /* Sem empresas cadastradas ainda: entra no contexto global (legado) */
+  if(!todasEmpresas.length){
+    _entrarSistema(encontrado, null); return;
+  }
+
+  if(!empresasAcesso.length){
+    err.textContent='⚠️ Usuário sem empresa vinculada. Contate o administrador.'; return;
+  }
+
+  if(empresasAcesso.length===1){
+    _entrarSistema(encontrado, empresasAcesso[0]); return;
+  }
+
+  /* Múltiplas empresas: mostra combo */
+  var sel=document.getElementById('login-empresa');
+  sel.innerHTML='<option value="">— Selecione a empresa —</option>'+
+    empresasAcesso.map(function(e){ return '<option value="'+e.id+'">'+e.nome+'</option>'; }).join('');
+  document.getElementById('login-empresa-row').style.display='';
+  err.textContent='';
+  btn.textContent='🏢 Confirmar Empresa';
+  btn.onclick=function(){
+    var empId=document.getElementById('login-empresa').value;
+    if(!empId){ document.getElementById('login-error').textContent='⚠️ Selecione a empresa.'; return; }
+    var emp=empresasAcesso.find(function(e){ return e.id===empId; });
+    _entrarSistema(encontrado, emp);
+    btn.textContent='🔑 Entrar'; btn.onclick=fazerLogin;
+  };
+}
+
+function _entrarSistema(user, empresa){
   currentUser=user;
+  _empresaAtiva=empresa;
+  _fixTypes();
+
   document.getElementById('login-screen').classList.remove('open');
+  document.getElementById('login-empresa-row').style.display='none';
   document.getElementById('user-display').textContent=user.nome||user.login;
   document.getElementById('app-header').style.display='flex';
   document.getElementById('app-main').style.display='flex';
+
+  var hEmp=document.getElementById('header-empresa-nome');
+  if(hEmp) hEmp.textContent=empresa?('🏢 '+empresa.nome):(user.perfil==='superadmin'?'':'');
+
+  var switcher=document.getElementById('header-empresa-switcher');
+  if(user.perfil==='superadmin'){
+    switcher.style.display='flex';
+    _popularSuperSel();
+  }else{
+    switcher.style.display='none';
+  }
+
   buildNav();
-  showPage('dashboard');
+  var firstPage=MODULOS.find(m=>hasPerm(m.id));
+  showPage(firstPage?firstPage.id:'dashboard');
   sincronizar();
+  if(user.perfil==='superadmin'){
+    setTimeout(function(){ notify('🛡️ Bem-vindo, Super Admin! Você tem acesso total a todas as empresas.','info'); },600);
+  }
+}
+
+function superTrocarEmpresa(empId){
+  if(empId){
+    var emp=_getEmpresas().find(function(e){ return e.id===empId; });
+    _empresaAtiva=emp||null;
+  }else{
+    _empresaAtiva=null;
+  }
+  _fixTypes();
+  var hEmp=document.getElementById('header-empresa-nome');
+  if(hEmp) hEmp.textContent=_empresaAtiva?('🏢 '+_empresaAtiva.nome):'';
+  /* Atualiza select */
+  var sel=document.getElementById('super-empresa-sel');
+  if(sel) sel.value=empId||'';
+  if(_empresaAtiva){
+    notify('🏢 Empresa: '+_empresaAtiva.nome,'info');
+  } else {
+    notify('🌐 Visualizando todas as empresas','info');
+  }
+  refreshAll();
+}
+
+function _popularSuperSel(){
+  var sel=document.getElementById('super-empresa-sel');
+  if(!sel) return;
+  var empresas=_getEmpresas();
+  sel.innerHTML='<option value="">🌐 Todas as empresas</option>'+
+    empresas.map(function(e){ return '<option value="'+e.id+'">'+e.nome+'</option>'; }).join('');
+  if(_empresaAtiva) sel.value=_empresaAtiva.id;
 }
 
 function fazerLogout(){
   currentUser=null;
+  _empresaAtiva=null;
   document.getElementById('login-user').value='';
   document.getElementById('login-pass').value='';
   document.getElementById('login-error').textContent='';
+  document.getElementById('login-empresa-row').style.display='none';
+  var saHint=document.getElementById('login-superadmin-hint'); if(saHint) saHint.style.display='none';
   document.getElementById('user-display').textContent='—';
+  var hEmp=document.getElementById('header-empresa-nome');
+  if(hEmp) hEmp.textContent='';
+  var switcher=document.getElementById('header-empresa-switcher');
+  if(switcher) switcher.style.display='none';
+  var btn=document.getElementById('login-btn');
+  btn.textContent='🔑 Entrar'; btn.onclick=fazerLogin;
   document.getElementById('app-header').style.display='none';
   document.getElementById('app-main').style.display='none';
   document.getElementById('login-screen').classList.add('open');
@@ -958,6 +1266,7 @@ function showPage(id){
   if(id==='departamentos')renderDepartamentos();
   if(id==='pecas')        renderPecas();
   if(id==='usuarios')     renderUsers();
+  if(id==='empresas')     renderEmpresas();
   if(id==='config')       loadConfig();
 }
 
@@ -1000,6 +1309,26 @@ function notify(msg,type='ok'){
   n.innerHTML='<span>'+ico[type]+'</span><span>'+msg+'</span>';
   w.appendChild(n);
   setTimeout(()=>{ n.style.opacity='0'; n.style.transition='opacity .3s'; setTimeout(()=>n.remove(),300); },2800);
+}
+
+// ══════════════════════════════════════════════════════════════════════
+// CPF CRIPTOGRAFIA (XOR + Base64)
+// ══════════════════════════════════════════════════════════════════════
+var _CPF_KEY = 'UC#2024$key!';
+function encryptCPF(cpf){
+  if(!cpf) return '';
+  var k=_CPF_KEY; var out='';
+  for(var i=0;i<cpf.length;i++) out+=String.fromCharCode(cpf.charCodeAt(i)^k.charCodeAt(i%k.length));
+  try{ return btoa(unescape(encodeURIComponent(out))); }catch(e){ return btoa(out); }
+}
+function decryptCPF(enc){
+  if(!enc) return '';
+  try{
+    var dec; try{ dec=decodeURIComponent(escape(atob(enc))); }catch(e){ dec=atob(enc); }
+    var k=_CPF_KEY; var out='';
+    for(var i=0;i<dec.length;i++) out+=String.fromCharCode(dec.charCodeAt(i)^k.charCodeAt(i%k.length));
+    return out;
+  }catch(e){ return ''; }
 }
 
 function maskCPF(el){
@@ -1056,6 +1385,19 @@ function renderDashboard(){
   var y=DY, m=DM;
   document.getElementById('dash-month-disp').textContent=PT_MONTHS[m]+' '+y;
   document.getElementById('dash-mes-label').textContent='Exibindo dados de '+PT_MONTHS[m]+' de '+y;
+
+  /* ── Painel superadmin: visão de todas as empresas ── */
+  var saPanel=document.getElementById('sa-overview');
+  var isSA=currentUser&&currentUser.perfil==='superadmin';
+  var semEmpresa=!_empresaAtiva;
+  if(saPanel){
+    if(isSA && semEmpresa){
+      saPanel.style.display='block';
+      _renderSAOverview(y, m);
+    } else {
+      saPanel.style.display='none';
+    }
+  }
 
   var all=db.entregas.filter(a=>inMonth(a.recebimento,y,m));
   var total=all.length;
@@ -1178,6 +1520,44 @@ function renderDashboard(){
 }
 
 // ══════════════════════════════════════════════════════════════════════
+// SUPERADMIN — VISÃO GERAL DE TODAS AS EMPRESAS
+// ══════════════════════════════════════════════════════════════════════
+function _renderSAOverview(y, m){
+  var empresas=_getEmpresas();
+  var container=document.getElementById('sa-empresas-cards');
+  if(!container) return;
+  if(!empresas.length){
+    container.innerHTML='<div style="font-size:.78rem;color:var(--text2);grid-column:1/-1;padding:8px 0;">Nenhuma empresa cadastrada ainda. Vá em <strong>Empresas</strong> para criar.</div>';
+    return;
+  }
+  var cards=empresas.map(function(emp){
+    var pfx='emp_'+emp.id+'_';
+    var entregas=Array.isArray(_cache[pfx+'entregas'])?_cache[pfx+'entregas']:[];
+    var funcs=Array.isArray(_cache[pfx+'funcionarios'])?_cache[pfx+'funcionarios']:[];
+    var periodEntregas=entregas.filter(function(e){ return inMonth(e.recebimento,y,m); });
+    var devolvidos=Array.isArray(_cache[pfx+'devolvidos'])?_cache[pfx+'devolvidos']:[];
+    var hoje2=today();
+    var ativos=periodEntregas.filter(function(e){ return !devolvidos.includes(e.id)&&!(e.devolucao&&e.devolucao<hoje2); }).length;
+    var vencidos=periodEntregas.filter(function(e){ return !devolvidos.includes(e.id)&&e.devolucao&&e.devolucao<hoje2; }).length;
+    var corBorda=vencidos>0?'var(--red)':'rgba(122,74,154,.25)';
+    return '<div onclick="superTrocarEmpresa(\''+emp.id+'\')" style="background:var(--s1);border:1.5px solid '+corBorda+';border-radius:10px;padding:14px 16px;cursor:pointer;transition:all .18s;box-shadow:var(--shadow);" '
+      +'onmouseover="this.style.borderColor=\'var(--gold)\'" onmouseout="this.style.borderColor=\''+corBorda+'\'">'
+      +'<div style="font-weight:700;font-size:.82rem;color:var(--text);margin-bottom:8px;display:flex;align-items:center;gap:6px;">'
+        +'<span>🏢</span><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+emp.nome+'</span>'
+      +'</div>'
+      +'<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;text-align:center;">'
+        +'<div style="background:rgba(160,120,40,.08);border-radius:6px;padding:5px 0;"><div style="font-family:\'Playfair Display\',serif;font-size:1.1rem;font-weight:700;color:var(--gold)">'+periodEntregas.length+'</div><div style="font-size:.6rem;color:var(--text2)">Entregas</div></div>'
+        +'<div style="background:rgba(58,122,74,.08);border-radius:6px;padding:5px 0;"><div style="font-family:\'Playfair Display\',serif;font-size:1.1rem;font-weight:700;color:var(--green)">'+ativos+'</div><div style="font-size:.6rem;color:var(--text2)">Ativos</div></div>'
+        +'<div style="background:rgba(192,74,58,.08);border-radius:6px;padding:5px 0;"><div style="font-family:\'Playfair Display\',serif;font-size:1.1rem;font-weight:700;color:var(--red)">'+vencidos+'</div><div style="font-size:.6rem;color:var(--text2)">Vencidos</div></div>'
+      +'</div>'
+      +'<div style="margin-top:8px;font-size:.65rem;color:var(--text2);">'+funcs.length+' funcionário(s) cadastrado(s)</div>'
+      +'<div style="margin-top:6px;font-size:.62rem;color:var(--blue);font-weight:600;">Clique para acessar →</div>'
+    +'</div>';
+  });
+  container.innerHTML=cards.join('');
+}
+
+// ══════════════════════════════════════════════════════════════════════
 // CONTROLE
 // ══════════════════════════════════════════════════════════════════════
 function renderControle(){
@@ -1251,10 +1631,10 @@ function openModalControle(editId=null){
   var db=getDB();
   var sf=document.getElementById('c-func');
   sf.innerHTML='<option value="">Selecione…</option>'+
-    db.funcionarios.map(f=>`<option value="${f.nome}" data-depto="${f.departamento}">${f.nome} — ${f.departamento}</option>`).join('');
+    db.funcionarios.filter(f=>(f.status||'ativo')==='ativo').map(f=>`<option value="${f.nome}" data-depto="${f.departamento}">${f.nome} — ${f.departamento}</option>`).join('');
   var sp=document.getElementById('c-peca');
   sp.innerHTML='<option value="">Selecione…</option>'+
-    db.pecas.map(p=>`<option value="${p.id}">${p.nome} · ${p.tamanho} · ${p.estilo||''} (${p.departamento||'Todos'})</option>`).join('');
+    db.pecas.map(function(p){ return '<option value="'+p.id+'">'+p.nome+(p.tamanho?' · '+p.tamanho:'')+(p.estilo?' · '+p.estilo:'')+(p.departamento?' ('+p.departamento+')':' (Todos os setores)')+'</option>'; }).join('');
 
   document.getElementById('c-edit-id').value=editId||'';
   document.getElementById('m-ctrl-title').textContent=editId?'✏️ Editar Entrega':'📋 Nova Entrega de Uniforme';
@@ -1425,7 +1805,7 @@ function printRelatorio(){
   var html=`
     <div style="font-family:Arial,sans-serif;padding:28px;color:#111;max-width:900px;margin:0 auto">
       <div style="border-bottom:3px solid #1a3a6e;padding-bottom:12px;margin-bottom:16px;display:flex;justify-content:space-between;align-items:flex-end">
-        <div><div style="font-size:18px;font-weight:800;color:#1a3a6e">👔 Relatório de Uniformes — UniControl</div>
+        <div><div style="font-size:18px;font-weight:800;color:#1a3a6e">👔 Relatório de Uniformes — VicStaffo</div>
         <div style="font-size:11px;color:#555;margin-top:3px">${empresa}${cnpj?' · CNPJ: '+cnpj:''}</div></div>
         <div style="text-align:right;font-size:10px;color:#777"><div>Emitido em: ${new Date().toLocaleString('pt-BR')}</div>${resp?`<div>Resp.: ${resp}</div>`:''}</div>
       </div>
@@ -1442,7 +1822,7 @@ function printRelatorio(){
         <tbody>${rows}</tbody>
       </table>
       <div style="margin-top:24px;border-top:1px solid #c5d2e8;padding-top:12px;font-size:10px;color:#888;display:flex;justify-content:space-between">
-        <span>UniControl — Total: ${data.length} registro${data.length!==1?'s':''}</span>
+        <span>VicStaffo — Total: ${data.length} registro${data.length!==1?'s':''}</span>
         <span>${new Date().toLocaleString('pt-BR')}</span>
       </div>
     </div>`;
@@ -1456,28 +1836,59 @@ function printRelatorio(){
 // FUNCIONÁRIOS
 // ══════════════════════════════════════════════════════════════════════
 function renderFuncionarios(){
-  var db=getDB(); var grid=document.getElementById('func-grid');
-  if(!db.funcionarios.length){ grid.innerHTML='<div class="cad-item" style="grid-column:1/-1"><div class="empty-txt">👤 Nenhum funcionário</div></div>'; return; }
-  grid.innerHTML=db.funcionarios.map(f=>`
-    <div class="cad-item">
-      <div><div class="cad-name">👤 ${f.nome}</div><div class="cad-sub">🏢 ${f.departamento}${f.matricula?' · '+f.matricula:''}</div></div>
-      <div style="display:flex;gap:5px">
-        <div class="ibtn" onclick="openModalFunc(${f.id})">✏️</div>
-        <div class="ibtn del" onclick="delFunc(${f.id})">🗑️</div>
-      </div>
-    </div>`).join('');
+  var db=getDB();
+  var tbody=document.getElementById('func-table');
+  var search=(document.getElementById('search-func')?.value||'').toLowerCase();
+  var filSetor=document.getElementById('fil-func-setor')?.value||'';
+  var filStatus=document.getElementById('fil-func-status')?.value||'';
+  var data=db.funcionarios.filter(f=>{
+    var ms=!search||f.nome.toLowerCase().includes(search);
+    var ms2=!filSetor||f.departamento===filSetor;
+    var ms3=!filStatus||(f.status||'ativo')===filStatus;
+    return ms&&ms2&&ms3;
+  });
+  if(!data.length){
+    tbody.innerHTML='<tr><td colspan="7"><div class="empty"><div class="empty-ico">👤</div><div class="empty-txt">Nenhum funcionário encontrado</div></div></td></tr>';
+    return;
+  }
+  tbody.innerHTML=data.map(f=>{
+    var cpfPlain=decryptCPF(f.cpf)||'—';
+    var st=f.status||'ativo';
+    var stBadge=st==='ativo'?'<span class="badge b-green">✅ Ativo</span>':'<span class="badge b-red">⛔ Inativo</span>';
+    return `<tr>
+      <td><strong>👤 ${f.nome}</strong></td>
+      <td><span class="badge b-gray">${f.departamento}</span></td>
+      <td style="font-family:monospace;font-size:.75rem">${cpfPlain}</td>
+      <td style="font-size:.75rem">${f.nascimento?fd(f.nascimento):'—'}</td>
+      <td style="font-size:.75rem">${f.admissao?fd(f.admissao):'—'}</td>
+      <td>${stBadge}</td>
+      <td><div style="display:flex;gap:5px">
+        <div class="ibtn" onclick="openModalFunc(${f.id})" title="Editar">✏️</div>
+        <div class="ibtn del" onclick="delFunc(${f.id})" title="Excluir">🗑️</div>
+      </div></td>
+    </tr>`;
+  }).join('');
 }
 
 function openModalFunc(editId=null){
-  var db=getDB();
-  var sd=document.getElementById('f-depto');
-  sd.innerHTML='<option value="">Selecione…</option>'+db.departamentos.map(d=>`<option value="${d.nome}">${d.nome}</option>`).join('');
   document.getElementById('f-eid').value=editId||'';
   if(editId){
-    var f=db.funcionarios.find(x=>x.id===editId);
-    if(f){ document.getElementById('f-nome').value=f.nome; sd.value=f.departamento; document.getElementById('f-mat').value=f.matricula||''; document.getElementById('f-cpf').value=f.cpf||''; }
+    var db=getDB(); var f=db.funcionarios.find(x=>x.id===editId);
+    if(f){
+      document.getElementById('f-nome').value=f.nome;
+      document.getElementById('f-depto').value=f.departamento;
+      document.getElementById('f-status').value=f.status||'ativo';
+      document.getElementById('f-nasc').value=f.nascimento||'';
+      document.getElementById('f-admissao').value=f.admissao||'';
+      document.getElementById('f-cpf').value=decryptCPF(f.cpf)||'';
+    }
   }else{
-    ['f-nome','f-mat','f-cpf'].forEach(id=>document.getElementById(id).value=''); sd.value='';
+    document.getElementById('f-nome').value='';
+    document.getElementById('f-depto').value='';
+    document.getElementById('f-status').value='ativo';
+    document.getElementById('f-nasc').value='';
+    document.getElementById('f-admissao').value='';
+    document.getElementById('f-cpf').value='';
   }
   openModal('m-func');
 }
@@ -1485,13 +1896,22 @@ function openModalFunc(editId=null){
 function saveFunc(){
   var nome=document.getElementById('f-nome').value.trim();
   var depto=document.getElementById('f-depto').value;
-  var mat=document.getElementById('f-mat').value.trim();
-  var cpf=document.getElementById('f-cpf').value.trim();
+  var status=document.getElementById('f-status').value;
+  var nasc=document.getElementById('f-nasc').value;
+  var admissao=document.getElementById('f-admissao').value;
+  var cpfRaw=document.getElementById('f-cpf').value.trim();
+  var cpf=cpfRaw?encryptCPF(cpfRaw):'';
   var eid=document.getElementById('f-eid').value;
-  if(!nome||!depto){ notify('Preencha nome e departamento.','err'); return; }
+  if(!nome||!depto){ notify('Preencha nome e setor.','err'); return; }
   var db=getDB();
-  if(eid){ var i=db.funcionarios.findIndex(x=>x.id===parseInt(eid)); if(i>=0) db.funcionarios[i]={...db.funcionarios[i],nome,departamento:depto,matricula:mat,cpf}; notify('Funcionário atualizado!'); }
-  else{ db.funcionarios.push({id:db.nid.func++,nome,departamento:depto,matricula:mat,cpf}); notify('Funcionário cadastrado! 👤'); }
+  if(eid){
+    var i=db.funcionarios.findIndex(x=>x.id===parseInt(eid));
+    if(i>=0) db.funcionarios[i]={...db.funcionarios[i],nome,departamento:depto,status,nascimento:nasc,admissao,cpf};
+    notify('Funcionário atualizado!');
+  }else{
+    db.funcionarios.push({id:db.nid.func++,nome,departamento:depto,status,nascimento:nasc,admissao,cpf});
+    notify('Funcionário cadastrado! 👤');
+  }
   saveDB(db); closeModal('m-func'); renderFuncionarios();
 }
 
@@ -1505,16 +1925,41 @@ function delFunc(id){
 // DEPARTAMENTOS
 // ══════════════════════════════════════════════════════════════════════
 function renderDepartamentos(){
-  var db=getDB(); var grid=document.getElementById('depto-grid');
-  if(!db.departamentos.length){ grid.innerHTML='<div class="cad-item" style="grid-column:1/-1"><div class="empty-txt">🏢 Nenhum departamento</div></div>'; return; }
-  grid.innerHTML=db.departamentos.map(d=>`
-    <div class="cad-item">
-      <div><div class="cad-name">🏢 ${d.nome}</div></div>
-      <div style="display:flex;gap:5px">
-        <div class="ibtn" onclick="openModalDepto(${d.id})">✏️</div>
-        <div class="ibtn del" onclick="delDepto(${d.id})">🗑️</div>
-      </div>
-    </div>`).join('');
+  var db=getDB();
+  var grid=document.getElementById('depto-grid');
+  if(!db.departamentos.length){
+    grid.innerHTML='<div class="empty" style="grid-column:1/-1"><div class="empty-ico">🏷️</div><div class="empty-txt">Nenhum setor cadastrado. Clique em "＋ Novo Setor" para começar.</div></div>';
+    return;
+  }
+  grid.innerHTML=db.departamentos.map(function(d){
+    return '<div class="cad-item">'
+      +'<div>'
+        +'<div class="cad-name">🏷️ '+d.nome+'</div>'
+        +'<div class="cad-sub">Setor de trabalho</div>'
+      +'</div>'
+      +'<div style="display:flex;gap:6px;align-items:center">'
+        +'<button class="btn btn-ghost" style="padding:4px 10px;font-size:.72rem" onclick="openModalDepto('+d.id+')">✏️</button>'
+        +'<button class="btn btn-danger" style="padding:4px 10px;font-size:.72rem" onclick="delDepto('+d.id+')">✕</button>'
+      +'</div>'
+    +'</div>';
+  }).join('');
+
+  /* Atualiza filtros e selects que dependem dos setores */
+  _atualizarSelectsSetor(db);
+}
+
+function _atualizarSelectsSetor(db){
+  db = db || getDB();
+  var opts = '<option value="">Todos os setores</option>'
+    + db.departamentos.map(function(d){ return '<option value="'+d.nome+'">'+d.nome+'</option>'; }).join('');
+
+  /* Filtro da página Funcionários */
+  var fs = document.getElementById('fil-func-setor');
+  if(fs){ var vfs=fs.value; fs.innerHTML=opts; fs.value=vfs; }
+
+  /* Filtro da página Peças */
+  var fp = document.getElementById('fil-peca-setor');
+  if(fp){ var vfp=fp.value; fp.innerHTML=opts; fp.value=vfp; }
 }
 
 function openModalDepto(editId=null){
@@ -1544,45 +1989,97 @@ function delDepto(id){
 // PEÇAS
 // ══════════════════════════════════════════════════════════════════════
 function renderPecas(){
-  var db=getDB(); var tbody=document.getElementById('peca-table');
-  if(!db.pecas.length){ tbody.innerHTML='<tr><td colspan="5"><div class="empty"><div class="empty-ico">🧥</div><div class="empty-txt">Nenhuma peça cadastrada</div></div></td></tr>'; return; }
-  tbody.innerHTML=db.pecas.map(p=>`
-    <tr>
-      <td><strong>${p.nome}</strong></td>
-      <td>${p.tamanho}</td>
-      <td>${p.estilo||'—'}</td>
-      <td><span class="badge b-gray">${p.departamento||'Todos'}</span></td>
-      <td><div style="display:flex;gap:5px">
-        <div class="ibtn" onclick="openModalPeca(${p.id})">✏️</div>
-        <div class="ibtn del" onclick="delPeca(${p.id})">🗑️</div>
-      </div></td>
-    </tr>`).join('');
+  var db=getDB();
+  var tbody=document.getElementById('peca-table');
+  var cntEl=document.getElementById('peca-count');
+
+  /* Popula filtro de setor dinamicamente */
+  var filSetorEl=document.getElementById('fil-peca-setor');
+  if(filSetorEl){
+    var curSel=filSetorEl.value;
+    filSetorEl.innerHTML='<option value="">Todos os setores</option>'+
+      db.departamentos.map(function(d){ return '<option value="'+d.nome+'"'+(curSel===d.nome?' selected':'')+'>'+d.nome+'</option>'; }).join('');
+  }
+
+  var search=(document.getElementById('search-peca')?.value||'').toLowerCase();
+  var filSetor=filSetorEl?filSetorEl.value:'';
+
+  var data=db.pecas.filter(function(p){
+    var ms=!search||p.nome.toLowerCase().includes(search)||(p.tamanho||'').toLowerCase().includes(search)||(p.estilo||'').toLowerCase().includes(search);
+    var mSetor=!filSetor||(p.departamento||'')=== filSetor;
+    return ms&&mSetor;
+  });
+
+  if(cntEl) cntEl.textContent=data.length+' peça'+(data.length!==1?'s':'');
+
+  if(!data.length){
+    tbody.innerHTML='<tr><td colspan="5"><div class="empty"><div class="empty-ico">🧥</div><div class="empty-txt">'+(db.pecas.length?'Nenhuma peça encontrada com esses filtros':'Nenhuma peça cadastrada')+'</div></div></td></tr>';
+    return;
+  }
+
+  tbody.innerHTML=data.map(function(p){
+    var setorLabel=p.departamento||'';
+    var setorBadge=setorLabel
+      ?'<span class="badge b-blue">🏷️ '+setorLabel+'</span>'
+      :'<span class="badge b-gray">Todos os setores</span>';
+    return '<tr>'
+      +'<td><strong>🧥 '+p.nome+'</strong></td>'
+      +'<td>'+(p.tamanho?'<span class="badge b-amber">'+p.tamanho+'</span>':'<span style="color:var(--text3)">—</span>')+'</td>'
+      +'<td>'+(p.estilo||'<span style="color:var(--text3)">—</span>')+'</td>'
+      +'<td>'+setorBadge+'</td>'
+      +'<td><div style="display:flex;gap:5px">'
+        +'<div class="ibtn teal" onclick="openModalPeca('+p.id+')" title="Editar">✏️</div>'
+        +'<div class="ibtn del" onclick="delPeca('+p.id+')" title="Excluir">🗑️</div>'
+      +'</div></td>'
+    +'</tr>';
+  }).join('');
 }
 
-function openModalPeca(editId=null){
+function openModalPeca(editId){
+  editId=editId||null;
   var db=getDB();
-  var sd=document.getElementById('p-depto');
-  sd.innerHTML='<option value="">Todos</option>'+db.departamentos.map(d=>`<option value="${d.nome}">${d.nome}</option>`).join('');
+
+  /* Popula select de setor com os departamentos cadastrados */
+  var sd=document.getElementById('p-setor');
+  sd.innerHTML='<option value="">— Todos os setores —</option>'+
+    db.departamentos.map(function(d){ return '<option value="'+d.nome+'">🏷️ '+d.nome+'</option>'; }).join('');
+
+  document.getElementById('m-peca-title').textContent=editId?'✏️ Editar Peça':'🧥 Nova Peça de Uniforme';
   document.getElementById('p-eid').value=editId||'';
+
   if(editId){
-    var p=db.pecas.find(x=>x.id===editId);
-    if(p){ document.getElementById('p-nome').value=p.nome; document.getElementById('p-tam').value=p.tamanho; document.getElementById('p-estilo').value=p.estilo; sd.value=p.departamento; }
+    var p=db.pecas.find(function(x){ return x.id===editId; });
+    if(p){
+      document.getElementById('p-nome').value=p.nome||'';
+      document.getElementById('p-tam').value=p.tamanho||'';
+      document.getElementById('p-estilo').value=p.estilo||'';
+      sd.value=p.departamento||'';
+    }
   }else{
-    ['p-nome','p-tam','p-estilo'].forEach(id=>document.getElementById(id).value=''); sd.value='';
+    ['p-nome','p-tam'].forEach(function(id){ document.getElementById(id).value=''; });
+    document.getElementById('p-estilo').value='';
+    sd.value='';
   }
   openModal('m-peca');
+  setTimeout(function(){ document.getElementById('p-nome').focus(); },150);
 }
 
 function savePeca(){
   var nome=document.getElementById('p-nome').value.trim();
   var tam=document.getElementById('p-tam').value.trim();
   var estilo=document.getElementById('p-estilo').value.trim();
-  var depto=document.getElementById('p-depto').value;
+  var setor=document.getElementById('p-setor').value;
   var eid=document.getElementById('p-eid').value;
   if(!nome){ notify('Informe o nome da peça.','err'); return; }
   var db=getDB();
-  if(eid){ var i=db.pecas.findIndex(x=>x.id===parseInt(eid)); if(i>=0) db.pecas[i]={...db.pecas[i],nome,tamanho:tam,estilo,departamento:depto}; notify('Peça atualizada!'); }
-  else{ db.pecas.push({id:db.nid.peca++,nome,tamanho:tam,estilo,departamento:depto}); notify('Peça cadastrada! 🧥'); }
+  if(eid){
+    var i=db.pecas.findIndex(function(x){ return x.id===parseInt(eid); });
+    if(i>=0) db.pecas[i]={...db.pecas[i],nome,tamanho:tam,estilo,departamento:setor};
+    notify('Peça atualizada! ✏️');
+  }else{
+    db.pecas.push({id:db.nid.peca++,nome,tamanho:tam,estilo,departamento:setor});
+    notify('Peça cadastrada! 🧥');
+  }
   saveDB(db); closeModal('m-peca'); renderPecas();
 }
 
@@ -1593,85 +2090,296 @@ function delPeca(id){
 }
 
 // ══════════════════════════════════════════════════════════════════════
-// USUÁRIOS
+// USUÁRIOS — estilo ControleBreak (formulário inline + modal de permissões)
 // ══════════════════════════════════════════════════════════════════════
-function renderUsers(){
-  var db=getDB(); var list=document.getElementById('user-list');
-  if(!db.users||!db.users.length){ list.innerHTML='<div class="empty"><div class="empty-ico">👥</div><div class="empty-txt">Nenhum usuário.</div></div>'; return; }
-  list.innerHTML=db.users.map(u=>`
-    <div class="user-item">
-      <div>
-        <div class="uname">👤 ${u.nome||u.login} <span style="font-size:.68rem;color:var(--text2);font-weight:400">(@${u.login})</span></div>
-        <div class="urole">${PERFIL_LABEL[u.perfil]||u.perfil} — Acesso: ${(u.perms||[]).length===MODULOS.length?'Total':(u.perms||[]).map(p=>MODULOS.find(m=>m.id===p)?.label.replace(/^[^ ]+ /,'')||p).join(', ')||'Nenhum'}</div>
-      </div>
-      <div style="display:flex;gap:6px;align-items:center">
-        <button class="btn btn-ghost btn-sm" onclick="openUserModal('${u.id}')">✏️ Editar</button>
-        ${u.id!==currentUser?.id?`<button class="btn btn-xs btn-danger" onclick="delUser('${u.id}')">🗑️</button>`:'<span class="badge b-amber">Você</span>'}
-      </div>
-    </div>`).join('');
+
+/* Módulos disponíveis neste sistema */
+var _MODULOS_USR = [
+  {k:'controle',   l:'📋 Controle'},
+  {k:'dashboard',  l:'📊 Dashboard'},
+  {k:'funcionarios',l:'👤 Funcionários'},
+  {k:'pecas',      l:'🧥 Peças'},
+  {k:'usuarios',   l:'🔐 Usuários'}
+];
+
+function onUsrPerfilChange() {
+  var perfil = document.getElementById('usr-perfil').value;
+  var empRow  = document.getElementById('usr-empresa-row');
+  var permWrap = document.getElementById('perm-novo-grid') ? document.getElementById('perm-novo-grid').parentElement : null;
+  if(perfil === 'superadmin') {
+    if(empRow) empRow.style.display = 'none';
+    if(permWrap) permWrap.style.display = 'none';
+  } else {
+    if(empRow) empRow.style.display = '';
+    if(permWrap) permWrap.style.display = '';
+    _buildEmpresaChecks(null);
+  }
 }
 
-var _editUid=null;
-function openUserModal(id=null){
-  _editUid=id;
-  document.getElementById('mu-title').textContent=id?'✏️ Editar Usuário':'👥 Novo Usuário';
-  var pg=document.getElementById('perm-grid');
-  pg.innerHTML=MODULOS.map(m=>`
-    <label class="perm-item">
-      <input type="checkbox" id="perm-${m.id}" value="${m.id}">
-      ${m.label}
-    </label>`).join('');
-  document.getElementById('u-edit-id').value=id||'';
-  if(id){
-    var db=getDB(); var u=db.users.find(x=>x.id===id);
-    if(u){
-      document.getElementById('u-login').value=u.login;
-      document.getElementById('u-nome').value=u.nome||'';
-      document.getElementById('u-perfil').value=u.perfil;
-      document.getElementById('u-senha').value='';
-      MODULOS.forEach(m=>{ var chk=document.getElementById('perm-'+m.id); if(chk) chk.checked=(u.perms||[]).includes(m.id); });
+function _buildEmpresaChecks(selectedIds) {
+  var empresas = _getEmpresas();
+  var el = document.getElementById('usr-empresa-grid') || document.getElementById('u-empresa-grid');
+  if(!el) return;
+  if(!empresas.length){ el.innerHTML='<span style="font-size:12px;color:var(--text2);">Nenhuma empresa cadastrada.</span>'; return; }
+  el.innerHTML = empresas.map(function(e){
+    var chk = (selectedIds && selectedIds.indexOf(e.id)>=0) ? 'checked' : '';
+    return '<label class="perm-item"><input type="checkbox" class="uemp-chk" value="'+e.id+'" '+chk+'> 🏢 '+e.nome+'</label>';
+  }).join('');
+}
+
+function addUsuario() {
+  var nome   = document.getElementById('usr-nome').value.trim();
+  var senha  = document.getElementById('usr-senha').value;
+  var senha2 = document.getElementById('usr-senha2').value;
+  var perfil = document.getElementById('usr-perfil').value;
+  if(!nome){  notify('Informe o nome de usuário.','err'); return; }
+  if(senha.length<4){ notify('Senha deve ter ao menos 4 caracteres.','err'); return; }
+  if(senha!==senha2){ notify('As senhas não coincidem.','err'); return; }
+
+  var lista = _getUsuarios();
+  for(var i=0;i<lista.length;i++){
+    if(lista[i].nome.toLowerCase()===nome.toLowerCase()){ notify('Usuário já existe.','err'); return; }
+  }
+
+  /* Permissões */
+  var permissoes = null;
+  if(perfil !== 'superadmin' && perfil !== 'admin') {
+    var permChecks = document.querySelectorAll('#perm-novo-grid input[type=checkbox]');
+    permissoes = {};
+    for(var j=0;j<permChecks.length;j++){
+      permissoes[permChecks[j].value] = permChecks[j].checked;
     }
-  }else{
-    ['u-login','u-senha','u-nome'].forEach(x=>document.getElementById(x).value='');
-    document.getElementById('u-perfil').value='operador';
-    MODULOS.forEach(m=>{ var chk=document.getElementById('perm-'+m.id); if(chk) chk.checked=false; });
+    permissoes['controle'] = true;
   }
-  document.getElementById('u-perfil').onchange=onPerfilChange;
-  openModal('m-usuario');
+
+  /* Empresas vinculadas */
+  var empresasIds = [];
+  if(perfil !== 'superadmin') {
+    var empChks = document.querySelectorAll('#usr-empresa-grid .uemp-chk:checked');
+    for(var k=0;k<empChks.length;k++) empresasIds.push(empChks[k].value);
+    if(!empresasIds.length && perfil !== 'admin') {
+      notify('Selecione ao menos uma empresa para o usuário.','err'); return;
+    }
+  }
+
+  lista.push({
+    id: 'u'+Date.now(),
+    nome: nome,
+    login: nome.toLowerCase().replace(/\s+/g,'.'),
+    senhaHash: _hashSenha(senha),
+    senha: senha,
+    perfil: perfil,
+    empresas: empresasIds,
+    permissoes: permissoes
+  });
+
+  document.getElementById('usr-nome').value='';
+  document.getElementById('usr-senha').value='';
+  document.getElementById('usr-senha2').value='';
+  _cache['usuarios'] = lista;
+  _persistir();
+  notify('✓ Usuário cadastrado!');
+  renderUsuarios();
 }
 
-function onPerfilChange(){
-  var isAdmin=document.getElementById('u-perfil').value==='admin';
-  MODULOS.forEach(m=>{ var chk=document.getElementById('perm-'+m.id); if(chk) chk.checked=isAdmin; });
+function delUsuario(id) {
+  var lista = _getUsuarios();
+  if(lista.length<=1){ notify('Deve haver ao menos um usuário.','err'); return; }
+  var alvo = lista.find(function(u){ return u.id===id; });
+  if(currentUser && alvo && (alvo.nome===currentUser.nome || alvo.login===currentUser.login)){
+    notify('Não é possível remover o usuário logado.','err'); return;
+  }
+  if(!confirm('Remover usuário?')) return;
+  _cache['usuarios'] = lista.filter(function(u){ return u.id!==id; });
+  _persistir();
+  notify('Usuário removido.');
+  renderUsuarios();
 }
 
-function saveUser(){
-  var login=document.getElementById('u-login').value.trim().toLowerCase();
-  var senha=document.getElementById('u-senha').value;
-  var nome=document.getElementById('u-nome').value.trim();
-  var perfil=document.getElementById('u-perfil').value;
-  var perms=MODULOS.map(m=>m.id).filter(id=>document.getElementById('perm-'+id)?.checked);
-  var editId=document.getElementById('u-edit-id').value;
-  if(!login){ notify('Informe o usuário.','err'); return; }
-  var db=getDB();
-  if(!db.users) db.users=[];
+/* Chamada quando a página de usuários é exibida */
+function renderUsers(){ renderUsuarios(); }
+
+function renderUsuarios() {
+  var lista = _getUsuarios();
+  var empresas = _getEmpresas();
+  var el = document.getElementById('lista-usuarios');
+  if(!el) return;
+  if(!lista.length){ el.innerHTML='<div class="empty"><div class="empty-ico">🔐</div><div class="empty-txt">Nenhum usuário</div></div>'; return; }
+
+  var PERFIL_LABEL = { superadmin:'Super Admin', admin:'Administrador', operador:'Operador' };
+  var isSA = currentUser && currentUser.perfil === 'superadmin';
+  var h='';
+  for(var i=0;i<lista.length;i++){
+    var u=lista[i];
+    var isMe = currentUser && (u.nome===currentUser.nome || u.login===currentUser.login);
+    var perms = u.permissoes || null;
+    var perfilBadge = u.perfil==='superadmin'
+      ? ' <span style="background:rgba(122,74,154,.12);color:#7a1a7a;padding:2px 7px;border-radius:10px;font-size:10px;font-weight:700;">SUPER</span>' : '';
+    var permHtml = '';
+    if(u.perfil==='superadmin'){ permHtml='<span style="font-size:12px;color:var(--text2);">Acesso total a todas as empresas</span>'; }
+    else if(u.perfil==='admin'){ permHtml='<span class="badge b-amber">Acesso total</span>'; }
+    else if(perms){
+      var tags='';
+      for(var m=0;m<_MODULOS_USR.length;m++){
+        if(perms[_MODULOS_USR[m].k]) tags+='<span class="badge b-blue" style="margin:2px;">'+_MODULOS_USR[m].l+'</span>';
+      }
+      permHtml='<div style="display:flex;flex-wrap:wrap;gap:3px;">'+tags+'</div>';
+    } else {
+      permHtml='<span class="badge b-amber">Acesso total</span>';
+    }
+    var empNomes = '';
+    if(u.perfil!=='superadmin'){
+      var empIds = u.empresas || [];
+      var nomes = empIds.map(function(eid){ var e=empresas.find(function(x){return x.id===eid;}); return e?e.nome:eid; });
+      empNomes = '<div style="font-size:11px;color:var(--text2);margin-top:2px;">🏢 '+(nomes.length?nomes.join(', '):'— Sem empresa')+'</div>';
+    }
+
+    h+='<div class="user-item" style="flex-direction:column;align-items:flex-start;gap:6px;">'
+      +'<div style="display:flex;justify-content:space-between;width:100%;align-items:center;">'
+      +'<div><div class="uname">'+u.nome+perfilBadge+(isMe?' <span style="font-size:10px;color:var(--gold);">(você)</span>':'')+'</div>'
+      +'<div class="urole">'+(PERFIL_LABEL[u.perfil]||u.perfil)+'</div>'
+      +empNomes+'</div>'
+      +(isMe?'<span style="font-size:12px;color:var(--text2);">—</span>'
+        :'<div style="display:flex;gap:6px;">'
+        +(u.perfil!=='superadmin'?'<button class="btn btn-ghost" style="padding:4px 10px;font-size:12px;" onclick="editarPermissoes(\''+u.id+'\')">✏️ Permissões</button>':'')
+        +'<button class="btn btn-danger" onclick="delUsuario(\''+u.id+'\')">✕ Remover</button>'
+        +'</div>')
+      +'</div>'
+      +'<div style="margin-top:4px;">'+permHtml+'</div>'
+      +'</div>';
+  }
+  el.innerHTML=h;
+
+  /* Popula select de perfil: superadmin só visível para superadmin */
+  var optSuper = document.getElementById('usr-opt-super');
+  if(optSuper) optSuper.style.display = isSA ? '' : 'none';
+  _buildEmpresaChecks(null);
+}
+
+/* Modal dinâmico de edição de permissões */
+function editarPermissoes(id) {
+  var lista = _getUsuarios();
+  var u = lista.find(function(x){ return x.id===id; });
+  if(!u) return;
+  var empresas = _getEmpresas();
+  var perms = u.permissoes || {};
+  var checksHtml = '';
+  for(var m=0;m<_MODULOS_USR.length;m++){
+    var disabled = _MODULOS_USR[m].k==='controle' ? ' disabled' : '';
+    var checked  = (_MODULOS_USR[m].k==='controle' || perms[_MODULOS_USR[m].k]) ? ' checked' : '';
+    checksHtml += '<label class="perm-item"><input type="checkbox" class="ep-check" data-mod="'+_MODULOS_USR[m].k+'"'+checked+disabled+'> '+_MODULOS_USR[m].l+'</label>';
+  }
+  var empIds = u.empresas || [];
+  var empChecks = empresas.map(function(e){
+    var c = empIds.indexOf(e.id)>=0 ? ' checked' : '';
+    return '<label class="perm-item"><input type="checkbox" class="ep-emp" value="'+e.id+'"'+c+'> '+e.nome+'</label>';
+  }).join('');
+
+  var overlay = document.getElementById('modal-edit-perm');
+  if(!overlay){
+    overlay = document.createElement('div');
+    overlay.id = 'modal-edit-perm';
+    overlay.style.cssText = 'display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:2100;align-items:center;justify-content:center;';
+    document.body.appendChild(overlay);
+  }
+  overlay.innerHTML = '<div style="background:var(--s1);border:1px solid var(--border);border-radius:12px;padding:28px;max-width:500px;width:94%;max-height:90vh;overflow-y:auto;">'
+    +'<h3 style="font-family:\'Playfair Display\',serif;color:var(--gold);margin-bottom:4px;font-size:18px;">✏️ Permissões de Acesso</h3>'
+    +'<p style="font-size:13px;color:var(--text2);margin-bottom:16px;">Usuário: <strong style="color:var(--text);">'+u.nome+'</strong></p>'
+    +(empresas.length?('<div style="margin-bottom:16px;"><div style="font-size:11px;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;">Empresas com Acesso</div><div class="perm-grid">'+empChecks+'</div></div>'):'')
+    +'<div style="font-size:11px;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;">Módulos Permitidos</div>'
+    +'<div class="perm-grid">'+checksHtml+'</div>'
+    +'<p style="font-size:11px;color:var(--text2);margin-top:10px;">* Controle sempre liberado.</p>'
+    +'<div style="display:flex;gap:10px;margin-top:18px;justify-content:flex-end;">'
+    +'<button class="btn btn-ghost" onclick="document.getElementById(\'modal-edit-perm\').style.display=\'none\'">Cancelar</button>'
+    +'<button class="btn btn-primary" onclick="salvarPermissoes(\''+id+'\')">✓ Salvar</button>'
+    +'</div></div>';
+  overlay.style.display = 'flex';
+}
+
+function salvarPermissoes(id) {
+  var lista = _getUsuarios();
+  var u = lista.find(function(x){ return x.id===id; });
+  if(!u) return;
+  var checks = document.querySelectorAll('#modal-edit-perm .ep-check');
+  var permissoes = {};
+  for(var i=0;i<checks.length;i++){
+    permissoes[checks[i].getAttribute('data-mod')] = checks[i].checked;
+  }
+  permissoes['controle'] = true;
+  u.permissoes = permissoes;
+  var empChks = document.querySelectorAll('#modal-edit-perm .ep-emp:checked');
+  u.empresas = [];
+  for(var j=0;j<empChks.length;j++) u.empresas.push(empChks[j].value);
+
+  document.getElementById('modal-edit-perm').style.display='none';
+  _cache['usuarios'] = lista;
+  _persistir();
+  notify('✓ Permissões atualizadas!');
+  renderUsuarios();
+  if(currentUser && currentUser.id === id){
+    currentUser.permissoes = permissoes;
+    aplicarPermissoesNav();
+  }
+}
+
+/* ══════════════════════════════════════════════════════════════════════
+   EMPRESAS CRUD
+   ══════════════════════════════════════════════════════════════════════ */
+function renderEmpresas(){
+  var empresas=_getEmpresas();
+  var list=document.getElementById('empresa-list');
+  if(!list) return;
+  if(!empresas.length){ list.innerHTML='<div class="empty"><div class="empty-ico">🏢</div><div class="empty-txt">Nenhuma empresa cadastrada.</div></div>'; return; }
+  list.innerHTML=empresas.map(function(e){
+    return '<div class="user-item">'+
+      '<div><div class="uname">🏢 '+e.nome+'</div>'+
+      '<div class="urole">'+(e.cnpj?'CNPJ: '+e.cnpj+' — ':'')+''+(e.endereco||'')+'</div></div>'+
+      '<div style="display:flex;gap:6px">'+
+        '<button class="btn btn-ghost btn-sm" onclick="openEmpresaModal(\''+e.id+'\')">✏️ Editar</button>'+
+        '<button class="btn btn-xs btn-danger" onclick="delEmpresa(\''+e.id+'\')">🗑️</button>'+
+      '</div></div>';
+  }).join('');
+}
+
+function openEmpresaModal(id=null){
+  document.getElementById('me-title').textContent=id?'✏️ Editar Empresa':'🏢 Nova Empresa';
+  document.getElementById('e-edit-id').value=id||'';
+  if(id){
+    var e=_getEmpresas().find(function(x){ return x.id===id; });
+    if(e){ document.getElementById('e-nome').value=e.nome||''; document.getElementById('e-cnpj').value=e.cnpj||''; document.getElementById('e-endereco').value=e.endereco||''; }
+  }else{
+    ['e-nome','e-cnpj','e-endereco'].forEach(function(x){ document.getElementById(x).value=''; });
+  }
+  openModal('m-empresa');
+}
+
+function saveEmpresa(){
+  var nome=document.getElementById('e-nome').value.trim();
+  var cnpj=document.getElementById('e-cnpj').value.trim();
+  var endereco=document.getElementById('e-endereco').value.trim();
+  var editId=document.getElementById('e-edit-id').value;
+  if(!nome){ notify('Informe o nome da empresa.','err'); return; }
+  var lista=_getEmpresas();
   if(editId){
-    var idx=db.users.findIndex(u=>u.id===editId);
-    if(idx>=0){ db.users[idx].login=login; db.users[idx].nome=nome; db.users[idx].perfil=perfil; db.users[idx].perms=perms; if(senha) db.users[idx].senha=senha; }
-    notify('Usuário atualizado!');
+    var idx=lista.findIndex(function(e){ return e.id===editId; });
+    if(idx>=0){ lista[idx].nome=nome; lista[idx].cnpj=cnpj; lista[idx].endereco=endereco; }
+    notify('Empresa atualizada!');
   }else{
-    if(!senha){ notify('Informe a senha.','err'); return; }
-    if(db.users.find(u=>u.login===login)){ notify('Usuário já existe.','err'); return; }
-    db.users.push({id:'u'+Date.now(),login,senha,nome,perfil,perms});
-    notify('Usuário criado!');
+    lista.push({id:'emp'+Date.now(),nome,cnpj,endereco});
+    notify('Empresa criada!');
   }
-  saveDB(db); closeModal('m-usuario'); renderUsers();
+  _setEmpresas(lista,function(){ _popularSuperSel(); });
+  closeModal('m-empresa'); renderEmpresas();
 }
 
-function delUser(id){
-  if(!confirm('Remover este usuário?')) return;
-  var db=getDB(); db.users=db.users.filter(u=>u.id!==id);
-  saveDB(db); renderUsers(); notify('Usuário removido.');
+function delEmpresa(id){
+  if(!confirm('Remover esta empresa? Todos os dados vinculados serão perdidos.')) return;
+  var lista=_getEmpresas().filter(function(e){ return e.id!==id; });
+  _setEmpresas(lista,null);
+  /* Remove dados da empresa do cache */
+  var prefixo='emp_'+id+'_';
+  Object.keys(_cache).forEach(function(k){ if(k.startsWith(prefixo)) delete _cache[k]; });
+  _persistir(); renderEmpresas(); _popularSuperSel(); notify('Empresa removida.');
 }
 
 // ══════════════════════════════════════════════════════════════════════
