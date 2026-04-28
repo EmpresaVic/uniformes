@@ -265,13 +265,21 @@
       "nome": "Gestao"
     }
   ],
-  "emp_emp1777332327243_pecas": [],
+  "emp_emp1777332327243_pecas": [
+    {
+      "id": 1,
+      "nome": "Calca",
+      "tamanho": "P",
+      "estilo": "Unissex",
+      "departamento": "Cozinha"
+    }
+  ],
   "emp_emp1777332327243_devolvidos": [],
   "emp_emp1777332327243_config": {},
   "emp_emp1777332327243_nid": {
     "dep": 4,
     "func": 2,
-    "peca": 1,
+    "peca": 2,
     "ent": 1
   }
 }
