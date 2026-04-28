@@ -37,8 +37,16 @@
       "senhaHash": "56cfd04c",
       "senha": "victria123",
       "perfil": "admin",
-      "empresas": [],
-      "permissoes": null
+      "empresas": [
+        "emp1777332264087"
+      ],
+      "permissoes": {
+        "controle": true,
+        "dashboard": false,
+        "funcionarios": false,
+        "pecas": false,
+        "usuarios": false
+      }
     },
     {
       "id": "u1777334523400",
