@@ -507,6 +507,13 @@
       "tamanho": "P",
       "estilo": "Unissex",
       "departamento": "Cozinha"
+    },
+    {
+      "id": 10,
+      "nome": "Calca",
+      "tamanho": "M",
+      "estilo": "Unissex",
+      "departamento": "Cozinha"
     }
   ],
   "emp_emp1777332264087_devolvidos": [],
@@ -514,7 +521,7 @@
   "emp_emp1777332264087_nid": {
     "dep": 4,
     "func": 1,
-    "peca": 10,
+    "peca": 11,
     "ent": 1
   }
 }
