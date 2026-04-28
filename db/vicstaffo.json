@@ -239,7 +239,19 @@
     "ent": 5
   },
   "emp_emp1777332327243_users": [],
-  "emp_emp1777332327243_entregas": [],
+  "emp_emp1777332327243_entregas": [
+    {
+      "id": 1,
+      "funcionario": "Murilo Rodrigues Ferraz de Oliveira",
+      "departamento": "Atendimento",
+      "peca": "Camisa",
+      "tamanho": "M",
+      "estilo": "Masculino",
+      "recebimento": "2026-04-28",
+      "devolucao": "",
+      "obs": ""
+    }
+  ],
   "emp_emp1777332327243_funcionarios": [
     {
       "id": 1,
@@ -413,6 +425,6 @@
     "dep": 4,
     "func": 2,
     "peca": 21,
-    "ent": 1
+    "ent": 2
   }
 }
