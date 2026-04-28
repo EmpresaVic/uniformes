@@ -384,6 +384,13 @@
       "tamanho": "36",
       "estilo": "Unissex",
       "departamento": ""
+    },
+    {
+      "id": 18,
+      "nome": "Sapato Seguranca",
+      "tamanho": "38",
+      "estilo": "Unissex",
+      "departamento": ""
     }
   ],
   "emp_emp1777332327243_devolvidos": [],
@@ -391,7 +398,7 @@
   "emp_emp1777332327243_nid": {
     "dep": 4,
     "func": 2,
-    "peca": 18,
+    "peca": 19,
     "ent": 1
   }
 }
