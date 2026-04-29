@@ -283,6 +283,17 @@
       "recebimento": "2026-01-06",
       "devolucao": "",
       "obs": ""
+    },
+    {
+      "id": 5,
+      "funcionario": "Joilma Paixão da Hora dos Santos",
+      "departamento": "Cozinha",
+      "peca": "Calca",
+      "tamanho": "M",
+      "estilo": "Unissex",
+      "recebimento": "2026-04-27",
+      "devolucao": "",
+      "obs": ""
     }
   ],
   "emp_emp1777332327243_funcionarios": [
@@ -485,7 +496,7 @@
     "dep": 4,
     "func": 5,
     "peca": 21,
-    "ent": 5
+    "ent": 6
   },
   "emp_emp1777332264087_users": [],
   "emp_emp1777332264087_entregas": [],
