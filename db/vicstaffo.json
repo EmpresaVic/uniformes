@@ -250,6 +250,17 @@
       "recebimento": "2026-04-28",
       "devolucao": "",
       "obs": ""
+    },
+    {
+      "id": 2,
+      "funcionario": "Kyara Silva",
+      "departamento": "Atendimento",
+      "peca": "Camisa",
+      "tamanho": "P",
+      "estilo": "Feminino",
+      "recebimento": "2026-01-05",
+      "devolucao": "",
+      "obs": "1 camisa"
     }
   ],
   "emp_emp1777332327243_funcionarios": [
@@ -434,7 +445,7 @@
     "dep": 4,
     "func": 3,
     "peca": 21,
-    "ent": 2
+    "ent": 3
   },
   "emp_emp1777332264087_users": [],
   "emp_emp1777332264087_entregas": [],
