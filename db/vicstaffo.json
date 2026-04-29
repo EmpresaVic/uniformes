@@ -281,6 +281,15 @@
       "nascimento": "2009-08-23",
       "admissao": "2025-11-05",
       "cpf": "YHcWHAcKBgpdXUEMZXE="
+    },
+    {
+      "id": 3,
+      "nome": "Taionara Barcelar",
+      "departamento": "Cozinha",
+      "status": "ativo",
+      "nascimento": "2005-07-06",
+      "admissao": "",
+      "cpf": "YHYQHAEDBwpbUkEMZns="
     }
   ],
   "emp_emp1777332327243_departamentos": [
@@ -443,7 +452,7 @@
   "emp_emp1777332327243_config": {},
   "emp_emp1777332327243_nid": {
     "dep": 4,
-    "func": 3,
+    "func": 4,
     "peca": 21,
     "ent": 3
   },
