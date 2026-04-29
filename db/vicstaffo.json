@@ -312,6 +312,15 @@
       "nascimento": "2005-07-06",
       "admissao": "",
       "cpf": "YHYQHAEDBwpbUkEMZns="
+    },
+    {
+      "id": 4,
+      "nome": "Joilma Paixão da Hora dos Santos",
+      "departamento": "Cozinha",
+      "status": "ativo",
+      "nascimento": "1982-12-10",
+      "admissao": "2026-03-02",
+      "cpf": "ZXcQHAEHAApbVkwMYnI="
     }
   ],
   "emp_emp1777332327243_departamentos": [
@@ -474,7 +483,7 @@
   "emp_emp1777332327243_config": {},
   "emp_emp1777332327243_nid": {
     "dep": 4,
-    "func": 4,
+    "func": 5,
     "peca": 21,
     "ent": 5
   },
