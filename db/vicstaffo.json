@@ -294,6 +294,17 @@
       "recebimento": "2026-04-27",
       "devolucao": "",
       "obs": ""
+    },
+    {
+      "id": 6,
+      "funcionario": "Joilma Paixão da Hora dos Santos",
+      "departamento": "Cozinha",
+      "peca": "Camisa",
+      "tamanho": "M",
+      "estilo": "Unissex",
+      "recebimento": "2026-04-29",
+      "devolucao": "",
+      "obs": "2 camiseta"
     }
   ],
   "emp_emp1777332327243_funcionarios": [
@@ -496,7 +507,7 @@
     "dep": 4,
     "func": 5,
     "peca": 21,
-    "ent": 6
+    "ent": 7
   },
   "emp_emp1777332264087_users": [],
   "emp_emp1777332264087_entregas": [],
