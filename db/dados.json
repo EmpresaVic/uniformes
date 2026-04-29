@@ -1,0 +1,885 @@
+{
+  "ef_func": [
+    {
+      "id": "0k8luc9jogvamoaszcfb",
+      "nome": "DEBORA CRISTINA MODESTO DOS ANJOS",
+      "vtH": [
+        {
+          "vt": 12.9,
+          "desde": "2026-04-23"
+        }
+      ],
+      "status": "ativo",
+      "adm": "2025-12-23",
+      "desl": null,
+      "cpf_enc": "",
+      "rg_enc": "",
+      "nasc": null,
+      "setor": null
+    }
+  ],
+  "ef_esc": {
+    "5j7i8eu9ncmmo68w41z_202604_2": "folga",
+    "5j7i8eu9ncmmo68w41z_202604_3": "falta",
+    "5j7i8eu9ncmmo68w41z_202604_5": "folga",
+    "5j7i8eu9ncmmo68w41z_202604_10": "folga",
+    "nw7dn7rz7jgmo68w41z_202604_6": "folga",
+    "nw7dn7rz7jgmo68w41z_202604_8": "falta",
+    "nw7dn7rz7jgmo68w41z_202604_11": "falta",
+    "nw7dn7rz7jgmo68w41z_202604_9": "falta",
+    "duoge3a3amjmo68w41z_202604_12": "susp",
+    "duoge3a3amjmo68w41z_202604_8": "atestado",
+    "duoge3a3amjmo68w41z_202604_14": "susp",
+    "duoge3a3amjmo68w41z_202604_15": "falta",
+    "duoge3a3amjmo68w41z_202604_16": "decl",
+    "duoge3a3amjmo68w41z_202604_17": "folga",
+    "hj32odcoctbmo68w41z_202604_4": "falta",
+    "hj32odcoctbmo68w41z_202604_16": "falta",
+    "hj32odcoctbmo68w41z_202604_19": "falta"
+  },
+  "ef_fer": [
+    {
+      "data": "2026-04-03",
+      "nome": "Sexta-feira Santa"
+    },
+    {
+      "data": "2026-04-21",
+      "nome": "Tiradentes"
+    }
+  ],
+  "ef_users": [
+    {
+      "id": "z2649c9v1dmo68w420",
+      "login": "admin",
+      "senha": "admin123",
+      "nome": "Administrador",
+      "perfil": "admin",
+      "perms": [
+        "dashboard",
+        "funcionarios",
+        "feriados",
+        "usuarios"
+      ]
+    },
+    {
+      "id": "vzy5u73ihfmo68w420",
+      "login": "gerente",
+      "senha": "1234",
+      "nome": "Gerente 1",
+      "perfil": "gerente",
+      "perms": [
+        "dashboard",
+        "funcionarios",
+        "escala",
+        "feriados",
+        "usuarios"
+      ]
+    },
+    {
+      "id": "mdfxn8y373dmo6aehd7",
+      "login": "teste",
+      "senha": "1234",
+      "nome": "teste",
+      "perfil": "operador",
+      "perms": [
+        "dashboard"
+      ]
+    },
+    {
+      "id": "qo0909dmknfmo6cyhjx",
+      "login": "admin123",
+      "senha": "admin123",
+      "nome": "Administrador",
+      "perfil": "admin",
+      "perms": [
+        "dashboard",
+        "funcionarios",
+        "setores",
+        "escala",
+        "feriados",
+        "disciplinar",
+        "conduta",
+        "usuarios"
+      ],
+      "empresas": [
+        "eedtw85lb7hmo7fioa1",
+        "bwckt2zfe8smo7fj6wx",
+        "r4757ib3oimo7fjujy"
+      ]
+    },
+    {
+      "id": "o8kvktbr4xfmo7fht1a",
+      "login": "super",
+      "senha": "super123",
+      "nome": "Super Admin",
+      "perfil": "superadmin",
+      "empresas": [],
+      "perms": [
+        "dashboard",
+        "funcionarios",
+        "escala",
+        "feriados",
+        "disciplinar",
+        "conduta",
+        "usuarios"
+      ]
+    },
+    {
+      "id": "oh6wpq7npxmo7flfsz",
+      "login": "victrus",
+      "senha": "victrus123",
+      "nome": "victrus",
+      "perfil": "gerente",
+      "perms": [
+        "dashboard",
+        "funcionarios",
+        "escala",
+        "feriados",
+        "disciplinar",
+        "conduta"
+      ],
+      "empresas": [
+        "r4757ib3oimo7fjujy"
+      ]
+    },
+    {
+      "id": "bsed90ieobnmo7flzzk",
+      "login": "victria",
+      "senha": "victria123",
+      "nome": "victria",
+      "perfil": "gerente",
+      "perms": [
+        "dashboard",
+        "funcionarios",
+        "escala",
+        "feriados"
+      ],
+      "empresas": [
+        "eedtw85lb7hmo7fioa1"
+      ]
+    },
+    {
+      "id": "bg48hl4fk2kmo7fmjms",
+      "login": "victive",
+      "senha": "123",
+      "nome": "victive",
+      "perfil": "gerente",
+      "perms": [
+        "dashboard",
+        "funcionarios",
+        "escala",
+        "feriados",
+        "usuarios"
+      ],
+      "empresas": [
+        "bwckt2zfe8smo7fj6wx"
+      ]
+    },
+    {
+      "id": "4w9isl4voq7moaqk0vf",
+      "login": "super",
+      "senha": "super123",
+      "nome": "Super Admin",
+      "perfil": "superadmin",
+      "empresas": [],
+      "perms": [
+        "dashboard",
+        "funcionarios",
+        "escala",
+        "feriados",
+        "usuarios"
+      ]
+    }
+  ],
+  "ef_empresas": [
+    {
+      "id": "eedtw85lb7hmo7fioa1",
+      "nome": "Victria Comercio de Alimentos Ltda",
+      "cnpj": "10637470000114",
+      "end": "Av Autonomistas, 1400"
+    },
+    {
+      "id": "bwckt2zfe8smo7fj6wx",
+      "nome": "Victive Comercio de alimentos",
+      "cnpj": "27586743000141",
+      "end": "Av Autonomistas"
+    },
+    {
+      "id": "r4757ib3oimo7fjujy",
+      "nome": "Victrus Comercio de Alimentos Ltda",
+      "cnpj": "58485298000157",
+      "end": "Rua Tenente Avelar, 81"
+    }
+  ],
+  "ef_func_eedtw85lb7hmo7fioa1": [
+    {
+      "id": "hx777n38rtmoat8462",
+      "nome": "ALINE SILVA DA COSTA",
+      "vtH": [
+        {
+          "vt": 12.2,
+          "desde": "2026-01-01"
+        }
+      ],
+      "status": "ativo",
+      "adm": "2026-01-01",
+      "desl": null,
+      "cpf_enc": "",
+      "rg_enc": ""
+    },
+    {
+      "id": "uapadakv52imoatcde8",
+      "nome": "DANILO POLIS DIAS  MOREIRA",
+      "vtH": [
+        {
+          "vt": 12.2,
+          "desde": "2026-01-01"
+        }
+      ],
+      "status": "ativo",
+      "adm": "2026-01-01",
+      "desl": null,
+      "cpf_enc": "",
+      "rg_enc": ""
+    },
+    {
+      "id": "4akp7e3eur7moatct8l",
+      "nome": "DEBORA CRISTINA MODESTO DOS ANJOS",
+      "vtH": [
+        {
+          "vt": 12.9,
+          "desde": "2026-01-01"
+        }
+      ],
+      "status": "ativo",
+      "adm": "2026-01-01",
+      "desl": null,
+      "cpf_enc": "",
+      "rg_enc": ""
+    },
+    {
+      "id": "0hkdtwiqr1humoateddz",
+      "nome": "KARINE CORREA MAIA DA TRINDADE15,40",
+      "vtH": [
+        {
+          "vt": 15.4,
+          "desde": "2026-01-01"
+        }
+      ],
+      "status": "ativo",
+      "adm": "2026-01-01",
+      "desl": null,
+      "cpf_enc": "",
+      "rg_enc": ""
+    },
+    {
+      "id": "3x3s0ie0olbmoatf2ho",
+      "nome": "MARIA PIEDADE GOMES DOS ANJOS",
+      "vtH": [
+        {
+          "vt": 12.2,
+          "desde": "2026-01-01"
+        }
+      ],
+      "status": "ativo",
+      "adm": "2026-01-01",
+      "desl": null,
+      "cpf_enc": "",
+      "rg_enc": ""
+    },
+    {
+      "id": "eqqzyh2tl8mmoator1p",
+      "nome": "MIRIAN REGINA GONÇALVES",
+      "vtH": [
+        {
+          "vt": 12.9,
+          "desde": "2026-01-01"
+        }
+      ],
+      "status": "ativo",
+      "adm": "2026-01-01",
+      "desl": null,
+      "cpf_enc": "",
+      "rg_enc": ""
+    },
+    {
+      "id": "yenu7rdsjrmoatqkwl",
+      "nome": "MOISES OLIVEIRA PLATERO",
+      "vtH": [
+        {
+          "vt": 15.4,
+          "desde": "2026-01-01"
+        }
+      ],
+      "status": "ativo",
+      "adm": "2026-01-01",
+      "desl": null,
+      "cpf_enc": "",
+      "rg_enc": ""
+    },
+    {
+      "id": "ds983es1kwimoats3pu",
+      "nome": "SÔNIA MARIA DOS SANTOS",
+      "vtH": [
+        {
+          "vt": 12.2,
+          "desde": "2026-01-01"
+        }
+      ],
+      "status": "ativo",
+      "adm": "2026-01-01",
+      "desl": null,
+      "cpf_enc": "",
+      "rg_enc": ""
+    },
+    {
+      "id": "v3aujtks4cbmoatskxn",
+      "nome": "VALDINEIA NASCIMENTO CHAGAS",
+      "vtH": [
+        {
+          "vt": 12.2,
+          "desde": "2026-01-01"
+        }
+      ],
+      "status": "ativo",
+      "adm": "2026-01-01",
+      "desl": null,
+      "cpf_enc": "",
+      "rg_enc": ""
+    },
+    {
+      "id": "7mmcd77gs0umoatt16q",
+      "nome": "TESTE",
+      "vtH": [
+        {
+          "vt": 12.2,
+          "desde": "2026-01-01"
+        }
+      ],
+      "status": "ativo",
+      "adm": "2026-01-01",
+      "desl": null,
+      "cpf_enc": "",
+      "rg_enc": ""
+    },
+    {
+      "id": "gw23o34k41vmohp300e",
+      "nome": "RICHEL",
+      "vtH": [
+        {
+          "vt": 12.2,
+          "desde": "2026-04-13"
+        }
+      ],
+      "status": "ativo",
+      "adm": "2026-04-13",
+      "desl": null,
+      "cpf_enc": "",
+      "rg_enc": ""
+    },
+    {
+      "id": "pdpm1tisahmohp4tek",
+      "nome": "DEYVILLA DANTAS",
+      "vtH": [
+        {
+          "vt": 12.2,
+          "desde": "2025-08-01"
+        }
+      ],
+      "status": "ativo",
+      "adm": "2025-08-01",
+      "desl": null,
+      "cpf_enc": "",
+      "rg_enc": ""
+    }
+  ],
+  "ef_fer_eedtw85lb7hmo7fioa1": [
+    {
+      "data": "2026-05-01",
+      "nome": "Dia do trabalho"
+    },
+    {
+      "data": "2026-04-03",
+      "nome": "Paixao Cristo"
+    },
+    {
+      "data": "2026-04-21",
+      "nome": "Tiradentes"
+    }
+  ],
+  "ef_esc_eedtw85lb7hmo7fioa1": {
+    "3x3s0ie0olbmoatf2ho_202605_3": "folga",
+    "ds983es1kwimoats3pu_202605_3": "folga",
+    "eqqzyh2tl8mmoator1p_202605_3": "folga",
+    "hx777n38rtmoat8462_202605_4": "folga",
+    "hx777n38rtmoat8462_202605_11": "folga",
+    "hx777n38rtmoat8462_202605_18": "folga",
+    "hx777n38rtmoat8462_202605_25": "folga",
+    "hx777n38rtmoat8462_202605_17": "folga",
+    "hx777n38rtmoat8462_202605_31": "folga",
+    "v3aujtks4cbmoatskxn_202605_3": "folga",
+    "v3aujtks4cbmoatskxn_202605_7": "folga",
+    "uapadakv52imoatcde8_202605_4": "folga",
+    "uapadakv52imoatcde8_202605_11": "folga",
+    "uapadakv52imoatcde8_202605_18": "folga",
+    "uapadakv52imoatcde8_202605_24": "folga",
+    "uapadakv52imoatcde8_202605_26": "folga",
+    "4akp7e3eur7moatct8l_202605_6": "folga",
+    "4akp7e3eur7moatct8l_202605_10": "folga",
+    "4akp7e3eur7moatct8l_202605_13": "folga",
+    "4akp7e3eur7moatct8l_202605_20": "folga",
+    "4akp7e3eur7moatct8l_202605_27": "folga",
+    "4akp7e3eur7moatct8l_202605_24": "folga",
+    "3x3s0ie0olbmoatf2ho_202605_6": "folga",
+    "3x3s0ie0olbmoatf2ho_202605_13": "folga",
+    "3x3s0ie0olbmoatf2ho_202605_20": "folga",
+    "3x3s0ie0olbmoatf2ho_202605_10": "folga",
+    "3x3s0ie0olbmoatf2ho_202605_27": "folga",
+    "eqqzyh2tl8mmoator1p_202605_5": "folga",
+    "eqqzyh2tl8mmoator1p_202605_12": "folga",
+    "eqqzyh2tl8mmoator1p_202605_19": "folga",
+    "eqqzyh2tl8mmoator1p_202605_26": "folga",
+    "eqqzyh2tl8mmoator1p_202605_31": "folga",
+    "yenu7rdsjrmoatqkwl_202605_5": "folga",
+    "yenu7rdsjrmoatqkwl_202605_12": "folga",
+    "yenu7rdsjrmoatqkwl_202605_19": "folga",
+    "yenu7rdsjrmoatqkwl_202605_26": "folga",
+    "yenu7rdsjrmoatqkwl_202605_24": "folga",
+    "ds983es1kwimoats3pu_202605_7": "folga",
+    "ds983es1kwimoats3pu_202605_14": "folga",
+    "ds983es1kwimoats3pu_202605_21": "folga",
+    "ds983es1kwimoats3pu_202605_28": "folga",
+    "ds983es1kwimoats3pu_202605_17": "folga",
+    "gw23o34k41vmohp300e_202605_6": "folga",
+    "gw23o34k41vmohp300e_202605_13": "folga",
+    "gw23o34k41vmohp300e_202605_20": "folga",
+    "gw23o34k41vmohp300e_202605_27": "folga",
+    "gw23o34k41vmohp300e_202605_17": "folga",
+    "pdpm1tisahmohp4tek_202605_7": "folga",
+    "pdpm1tisahmohp4tek_202605_14": "folga",
+    "pdpm1tisahmohp4tek_202605_21": "folga",
+    "pdpm1tisahmohp4tek_202605_28": "folga",
+    "pdpm1tisahmohp4tek_202605_17": "folga",
+    "0hkdtwiqr1humoateddz_202605_4": "folga",
+    "0hkdtwiqr1humoateddz_202605_11": "folga",
+    "0hkdtwiqr1humoateddz_202605_18": "folga",
+    "0hkdtwiqr1humoateddz_202605_25": "folga",
+    "v3aujtks4cbmoatskxn_202605_11": "ferias",
+    "uapadakv52imoatcde8_202604_4": "folga"
+  },
+  "ef_func_bwckt2zfe8smo7fj6wx": [],
+  "ef_fer_bwckt2zfe8smo7fj6wx": [],
+  "ef_esc_bwckt2zfe8smo7fj6wx": {},
+  "ef_func_r4757ib3oimo7fjujy": [
+    {
+      "id": "95o9tyf3clvmohlhpcr",
+      "nome": "ANDREZA POLIS BISPO DA SILVA",
+      "vtH": [
+        {
+          "vt": 12.2,
+          "desde": "2025-07-03"
+        }
+      ],
+      "status": "ativo",
+      "adm": "2025-07-03",
+      "desl": null,
+      "cpf_enc": "Nc0/z1L1FuJQE6l3OXnxH82sJ6nq82uRMmUFfZY1q4ewFvcQmFL+CDLy",
+      "rg_enc": ""
+    },
+    {
+      "id": "48v6t44p1fkmohlkiy4",
+      "nome": "JOILMA PAIXAO DA HORA DOS SANTOS",
+      "vtH": [
+        {
+          "vt": 15.4,
+          "desde": "2026-03-02"
+        }
+      ],
+      "status": "ativo",
+      "adm": "2026-03-02",
+      "desl": null,
+      "cpf_enc": "W2n1GbpGwf8CZNcph51V0XmfsC407qLVcXi3PCuC62+Qs09+ZJiTOL9Y",
+      "rg_enc": ""
+    },
+    {
+      "id": "pce8rvemctmohlm4m2",
+      "nome": "GRAZIELY PEREIRA PIO",
+      "vtH": [
+        {
+          "vt": 22.6,
+          "desde": "2025-05-09"
+        }
+      ],
+      "status": "ativo",
+      "adm": "2025-05-09",
+      "desl": null,
+      "cpf_enc": "KFCGD9RtN6ajYFFmPD9oP8AEEHH4s4ztzBgjS+QZSu8pXat30nRYnTc4",
+      "rg_enc": ""
+    },
+    {
+      "id": "uzqqnwt5vebmohlodi8",
+      "nome": "TAIONARA BACELAR CONCEICAO",
+      "vtH": [
+        {
+          "vt": 12.2,
+          "desde": "2025-08-09"
+        }
+      ],
+      "status": "ativo",
+      "adm": "2025-08-09",
+      "desl": null,
+      "cpf_enc": "c1Lgd3vJxwuXqtZSYkVyZemVNfSOa0oyaupxiXuOftb4xPGTM8eA74xK",
+      "rg_enc": ""
+    },
+    {
+      "id": "8urrcmkfnf2mohlvw54",
+      "nome": "DHENIFFER GALVAO ARAUJO DA SILVA",
+      "vtH": [
+        {
+          "vt": 12.9,
+          "desde": "2026-02-05"
+        }
+      ],
+      "status": "ativo",
+      "adm": "2026-02-05",
+      "desl": null,
+      "cpf_enc": "jIa0dXXbneI3JaKc3q8QrV53MhRn34NQlUy2H0gJNc4LA4+jivgtmSHw",
+      "rg_enc": ""
+    },
+    {
+      "id": "8wfh3x75bpemohm1hn7",
+      "nome": "ARTHUR ALVES RODRIGUES",
+      "vtH": [
+        {
+          "vt": 12.2,
+          "desde": "2026-04-10"
+        }
+      ],
+      "status": "ativo",
+      "adm": "2026-04-10",
+      "desl": null,
+      "cpf_enc": "xQGfn8pRLzMMQYWoZRu6N9Ukl4++yjC5yf4MuouCLo0chspdXLownhzu",
+      "rg_enc": ""
+    },
+    {
+      "id": "jldxz30h4nmohm4zim",
+      "nome": "YASMIM LOURENCO SILVA",
+      "vtH": [
+        {
+          "vt": 22.4,
+          "desde": "2026-02-25"
+        }
+      ],
+      "status": "ativo",
+      "adm": "2026-02-25",
+      "desl": null,
+      "cpf_enc": "Ug6/On2Cin9FMkAfbl3IL9CfGx8D6P1RmxQA03a3w1h7j6YuvWC2DijH",
+      "rg_enc": ""
+    },
+    {
+      "id": "buelz9yp3b5mohmcy0a",
+      "nome": "KYARA VANDERLEI DAMASIO DA SILVA",
+      "vtH": [
+        {
+          "vt": 12.2,
+          "desde": "2025-10-05"
+        }
+      ],
+      "status": "ativo",
+      "adm": "2025-10-05",
+      "desl": null,
+      "cpf_enc": "pX1y3nGiCxLNaDlqNTsGCgPCZz9ML3vLFRUb3r+OM3IDdCkcpYGJ6pVH",
+      "rg_enc": ""
+    },
+    {
+      "id": "xf2wzgckrqqmohmehat",
+      "nome": "IZABELLA PIETRA MACHADO SILVA",
+      "vtH": [
+        {
+          "vt": 12.9,
+          "desde": "2026-04-06"
+        }
+      ],
+      "status": "ativo",
+      "adm": "2026-04-06",
+      "desl": null,
+      "cpf_enc": "rCJozbNNS/Kr2ZGw7Ay/32rdI3GHrBF0e3qWgW51f642yFkHpoaSu+ru",
+      "rg_enc": ""
+    },
+    {
+      "id": "q2kmpxhv9smohmjsl7",
+      "nome": "MURILO RODRIGUES FERRAZ DE OLIVEIRA",
+      "vtH": [
+        {
+          "vt": 21.2,
+          "desde": "2026-02-07"
+        }
+      ],
+      "status": "ativo",
+      "adm": "2026-02-07",
+      "desl": null,
+      "cpf_enc": "98AuoIWylaM87QnbNcbhZAKmGyzbMCp+BGHzuMN0WW0lGJAl2zFHFOKC",
+      "rg_enc": ""
+    }
+  ],
+  "ef_fer_r4757ib3oimo7fjujy": [
+    {
+      "data": "2026-04-03",
+      "nome": "Paixão de Cristo"
+    },
+    {
+      "data": "2026-04-21",
+      "nome": "Tiradentes"
+    },
+    {
+      "data": "2026-05-01",
+      "nome": "Dia do  Trabalho"
+    },
+    {
+      "data": "2026-06-04",
+      "nome": "Corpus Christi"
+    }
+  ],
+  "ef_esc_r4757ib3oimo7fjujy": {
+    "pce8rvemctmohlm4m2_202604_8": "atestado",
+    "pce8rvemctmohlm4m2_202604_9": "atestado",
+    "pce8rvemctmohlm4m2_202604_10": "atestado",
+    "pce8rvemctmohlm4m2_202604_11": "atestado",
+    "pce8rvemctmohlm4m2_202604_12": "atestado",
+    "pce8rvemctmohlm4m2_202604_13": "atestado",
+    "pce8rvemctmohlm4m2_202604_14": "atestado",
+    "pce8rvemctmohlm4m2_202604_15": "atestado",
+    "pce8rvemctmohlm4m2_202604_16": "atestado",
+    "pce8rvemctmohlm4m2_202604_17": "atestado",
+    "pce8rvemctmohlm4m2_202604_18": "atestado",
+    "pce8rvemctmohlm4m2_202604_19": "atestado",
+    "pce8rvemctmohlm4m2_202604_20": "atestado",
+    "pce8rvemctmohlm4m2_202604_21": "atestado",
+    "pce8rvemctmohlm4m2_202604_22": "atestado",
+    "pce8rvemctmohlm4m2_202604_23": "atestado",
+    "pce8rvemctmohlm4m2_202604_24": "atestado",
+    "pce8rvemctmohlm4m2_202604_25": "atestado",
+    "pce8rvemctmohlm4m2_202604_26": "atestado",
+    "pce8rvemctmohlm4m2_202604_27": "atestado",
+    "pce8rvemctmohlm4m2_202604_28": "atestado",
+    "pce8rvemctmohlm4m2_202604_29": "atestado",
+    "pce8rvemctmohlm4m2_202604_30": "atestado",
+    "48v6t44p1fkmohlkiy4_202605_3": "folga",
+    "uzqqnwt5vebmohlodi8_202605_3": "folga",
+    "8urrcmkfnf2mohlvw54_202605_3": "folga",
+    "95o9tyf3clvmohlhpcr_202605_10": "folga",
+    "xf2wzgckrqqmohmehat_202605_10": "folga",
+    "jldxz30h4nmohm4zim_202605_17": "folga",
+    "buelz9yp3b5mohmcy0a_202605_17": "folga",
+    "48v6t44p1fkmohlkiy4_202605_17": "folga",
+    "95o9tyf3clvmohlhpcr_202605_24": "folga",
+    "8wfh3x75bpemohm1hn7_202605_24": "folga",
+    "q2kmpxhv9smohmjsl7_202605_31": "folga",
+    "uzqqnwt5vebmohlodi8_202605_31": "folga",
+    "95o9tyf3clvmohlhpcr_202605_4": "folga",
+    "95o9tyf3clvmohlhpcr_202605_12": "folga",
+    "95o9tyf3clvmohlhpcr_202605_18": "folga",
+    "95o9tyf3clvmohlhpcr_202605_26": "folga",
+    "48v6t44p1fkmohlkiy4_202605_6": "folga",
+    "48v6t44p1fkmohlkiy4_202605_13": "folga",
+    "48v6t44p1fkmohlkiy4_202605_20": "folga",
+    "48v6t44p1fkmohlkiy4_202605_27": "folga",
+    "uzqqnwt5vebmohlodi8_202605_5": "folga",
+    "uzqqnwt5vebmohlodi8_202605_11": "folga",
+    "uzqqnwt5vebmohlodi8_202605_19": "folga",
+    "uzqqnwt5vebmohlodi8_202605_25": "folga",
+    "8urrcmkfnf2mohlvw54_202605_5": "folga",
+    "8urrcmkfnf2mohlvw54_202605_12": "folga",
+    "8urrcmkfnf2mohlvw54_202605_19": "folga",
+    "8urrcmkfnf2mohlvw54_202605_26": "folga",
+    "8wfh3x75bpemohm1hn7_202605_6": "folga",
+    "8wfh3x75bpemohm1hn7_202605_13": "folga",
+    "8wfh3x75bpemohm1hn7_202605_20": "folga",
+    "8wfh3x75bpemohm1hn7_202605_27": "folga",
+    "jldxz30h4nmohm4zim_202605_6": "folga",
+    "jldxz30h4nmohm4zim_202605_13": "folga",
+    "jldxz30h4nmohm4zim_202605_20": "folga",
+    "jldxz30h4nmohm4zim_202605_27": "folga",
+    "buelz9yp3b5mohmcy0a_202605_4": "folga",
+    "buelz9yp3b5mohmcy0a_202605_11": "folga",
+    "buelz9yp3b5mohmcy0a_202605_20": "folga",
+    "buelz9yp3b5mohmcy0a_202605_25": "folga",
+    "xf2wzgckrqqmohmehat_202605_7": "folga",
+    "xf2wzgckrqqmohmehat_202605_14": "folga",
+    "xf2wzgckrqqmohmehat_202605_21": "folga",
+    "xf2wzgckrqqmohmehat_202605_28": "folga",
+    "q2kmpxhv9smohmjsl7_202605_6": "folga",
+    "q2kmpxhv9smohmjsl7_202605_13": "folga",
+    "q2kmpxhv9smohmjsl7_202605_18": "folga",
+    "q2kmpxhv9smohmjsl7_202605_27": "folga",
+    "uzqqnwt5vebmohlodi8_202604_27": "atestado",
+    "uzqqnwt5vebmohlodi8_202604_28": "folga",
+    "95o9tyf3clvmohlhpcr_202604_27": "folga",
+    "95o9tyf3clvmohlhpcr_202604_16": "atestado",
+    "95o9tyf3clvmohlhpcr_202604_18": "atestado",
+    "95o9tyf3clvmohlhpcr_202604_19": "atestado",
+    "95o9tyf3clvmohlhpcr_202604_6": "folga",
+    "95o9tyf3clvmohlhpcr_202604_12": "folga",
+    "95o9tyf3clvmohlhpcr_202604_14": "folga",
+    "95o9tyf3clvmohlhpcr_202604_20": "folga",
+    "uzqqnwt5vebmohlodi8_202604_5": "folga",
+    "uzqqnwt5vebmohlodi8_202604_9": "folga",
+    "uzqqnwt5vebmohlodi8_202604_13": "folga",
+    "uzqqnwt5vebmohlodi8_202604_21": "folga",
+    "48v6t44p1fkmohlkiy4_202604_5": "folga",
+    "48v6t44p1fkmohlkiy4_202604_1": "folga",
+    "48v6t44p1fkmohlkiy4_202604_8": "folga",
+    "48v6t44p1fkmohlkiy4_202604_15": "folga",
+    "48v6t44p1fkmohlkiy4_202604_19": "folga",
+    "48v6t44p1fkmohlkiy4_202604_22": "folga",
+    "48v6t44p1fkmohlkiy4_202604_29": "folga",
+    "8urrcmkfnf2mohlvw54_202604_6": "folga",
+    "8urrcmkfnf2mohlvw54_202604_13": "folga",
+    "8urrcmkfnf2mohlvw54_202604_20": "folga",
+    "8urrcmkfnf2mohlvw54_202604_26": "folga",
+    "8urrcmkfnf2mohlvw54_202604_28": "folga",
+    "8wfh3x75bpemohm1hn7_202604_15": "folga",
+    "8wfh3x75bpemohm1hn7_202604_22": "folga",
+    "8wfh3x75bpemohm1hn7_202604_29": "folga",
+    "jldxz30h4nmohm4zim_202604_2": "folga",
+    "jldxz30h4nmohm4zim_202604_8": "folga",
+    "jldxz30h4nmohm4zim_202604_10": "falta",
+    "jldxz30h4nmohm4zim_202604_12": "folga",
+    "jldxz30h4nmohm4zim_202604_15": "folga",
+    "jldxz30h4nmohm4zim_202604_22": "folga",
+    "jldxz30h4nmohm4zim_202604_26": "atestado",
+    "jldxz30h4nmohm4zim_202604_27": "atestado",
+    "jldxz30h4nmohm4zim_202604_29": "folga",
+    "buelz9yp3b5mohmcy0a_202604_3": "falta",
+    "buelz9yp3b5mohmcy0a_202604_6": "folga",
+    "buelz9yp3b5mohmcy0a_202604_13": "folga",
+    "buelz9yp3b5mohmcy0a_202604_19": "folga",
+    "buelz9yp3b5mohmcy0a_202604_22": "folga",
+    "buelz9yp3b5mohmcy0a_202604_27": "folga",
+    "xf2wzgckrqqmohmehat_202604_16": "folga",
+    "xf2wzgckrqqmohmehat_202604_19": "falta",
+    "xf2wzgckrqqmohmehat_202604_23": "folga",
+    "xf2wzgckrqqmohmehat_202604_30": "folga",
+    "q2kmpxhv9smohmjsl7_202604_1": "folga",
+    "q2kmpxhv9smohmjsl7_202604_8": "folga",
+    "q2kmpxhv9smohmjsl7_202604_20": "folga",
+    "q2kmpxhv9smohmjsl7_202604_29": "folga",
+    "q2kmpxhv9smohmjsl7_202604_5": "folga",
+    "95o9tyf3clvmohlhpcr_202604_26": "extra"
+  },
+  "ef_disc_rules": [
+    {
+      "tipo": "advertencia",
+      "label": "1ª Advertência",
+      "diasSusp": 0,
+      "descricao": "Primeira falta injustificada — advertência escrita."
+    },
+    {
+      "tipo": "advertencia",
+      "label": "2ª Advertência",
+      "diasSusp": 0,
+      "descricao": "Segunda falta injustificada — advertência com confirmação."
+    },
+    {
+      "tipo": "advertencia",
+      "label": "3a Advertencia",
+      "diasSusp": 0,
+      "descricao": "Terceira falta injustificada"
+    },
+    {
+      "tipo": "suspensao",
+      "label": "Suspensão (1 dia)",
+      "diasSusp": 1,
+      "descricao": "Quarta falta — suspensão disciplinar de 1 dia."
+    },
+    {
+      "tipo": "suspensao",
+      "label": "Suspensão (3 dias)",
+      "diasSusp": 3,
+      "descricao": "Quinta falta — suspensão disciplinar de 3 dias."
+    },
+    {
+      "tipo": "suspensao",
+      "label": "Suspensão (5 dias)",
+      "diasSusp": 5,
+      "descricao": "Sexta falta — suspensão disciplinar de 5 dias."
+    },
+    {
+      "tipo": "justa_causa",
+      "label": "Justa Causa",
+      "diasSusp": 0,
+      "descricao": "Setima falta ou mais — demissão por justa causa (art. 482 CLT)."
+    }
+  ],
+  "ef_disc_hist__hj32odcoctbmo68w41z": [
+    {
+      "registrado": true,
+      "tipo": "advertencia",
+      "label": "Advertência (1ª)",
+      "diasSusp": 0,
+      "data": "22/04/2026",
+      "mesRef": "Abril/2026",
+      "dias": [
+        4,
+        16,
+        19
+      ],
+      "obs": ""
+    }
+  ],
+  "ef_disc_hist__duoge3a3amjmo68w41z": [],
+  "ef_disc_hist__5j7i8eu9ncmmo68w41z": [],
+  "ef_regras_op": [
+    {
+      "id": "ynq9r23y7mhmoan4828",
+      "nome": "Agressão fisica ao funcionario",
+      "descricao": "Funcionário agrediu fisicamente dentro da empresa",
+      "etapas": [
+        {
+          "tipo": "demissao",
+          "label": "Demissão por Justa Causa",
+          "descricao": "Reincidência — demissão por justa causa.",
+          "diasSusp": 1
+        }
+      ]
+    },
+    {
+      "id": "3xyzu37b4wbmohw962j",
+      "nome": "Desacato",
+      "descricao": "desacato ao superior",
+      "etapas": [
+        {
+          "tipo": "suspensao",
+          "label": "Suspensão (1 dia)",
+          "descricao": "Terceira ocorrência — suspensão de 1 dia.",
+          "diasSusp": 1
+        },
+        {
+          "tipo": "demissao",
+          "label": "Demissão por Justa Causa",
+          "descricao": "Reincidência — demissão por justa causa.",
+          "diasSusp": 1
+        }
+      ]
+    }
+  ],
+  "ef_pgtos_eedtw85lb7hmo7fioa1": [
+    {
+      "id": "z9nfvtxvt8qmoj9jyhs",
+      "fid": "hx777n38rtmoat8462",
+      "mesRef": "2026-04",
+      "data": "2026-04-01",
+      "valor": 300,
+      "obs": "pagamento em conta Banco do Brasil"
+    },
+    {
+      "id": "ski7ctc1uqamoj9kpjl",
+      "fid": "hx777n38rtmoat8462",
+      "mesRef": "2026-04",
+      "data": "2026-04-20",
+      "valor": 66,
+      "obs": "pagamento no banco do brasil"
+    }
+  ],
+  "ef_pgtos_r4757ib3oimo7fjujy": []
+}
