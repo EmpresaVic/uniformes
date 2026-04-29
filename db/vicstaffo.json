@@ -272,6 +272,17 @@
       "recebimento": "2026-01-06",
       "devolucao": "",
       "obs": ""
+    },
+    {
+      "id": 4,
+      "funcionario": "Taionara Barcelar",
+      "departamento": "Cozinha",
+      "peca": "Camisa",
+      "tamanho": "M",
+      "estilo": "Feminino",
+      "recebimento": "2026-01-06",
+      "devolucao": "",
+      "obs": ""
     }
   ],
   "emp_emp1777332327243_funcionarios": [
@@ -465,7 +476,7 @@
     "dep": 4,
     "func": 4,
     "peca": 21,
-    "ent": 4
+    "ent": 5
   },
   "emp_emp1777332264087_users": [],
   "emp_emp1777332264087_entregas": [],
