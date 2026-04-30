@@ -250,61 +250,6 @@
       "recebimento": "2026-04-28",
       "devolucao": "",
       "obs": ""
-    },
-    {
-      "id": 2,
-      "funcionario": "Kyara Silva",
-      "departamento": "Atendimento",
-      "peca": "Camisa",
-      "tamanho": "P",
-      "estilo": "Feminino",
-      "recebimento": "2026-01-05",
-      "devolucao": "",
-      "obs": "1 camisa"
-    },
-    {
-      "id": 3,
-      "funcionario": "Taionara Barcelar",
-      "departamento": "Cozinha",
-      "peca": "Camisa",
-      "tamanho": "P",
-      "estilo": "Unissex",
-      "recebimento": "2026-01-06",
-      "devolucao": "",
-      "obs": ""
-    },
-    {
-      "id": 4,
-      "funcionario": "Taionara Barcelar",
-      "departamento": "Cozinha",
-      "peca": "Camisa",
-      "tamanho": "M",
-      "estilo": "Feminino",
-      "recebimento": "2026-01-06",
-      "devolucao": "",
-      "obs": ""
-    },
-    {
-      "id": 5,
-      "funcionario": "Joilma Paixão da Hora dos Santos",
-      "departamento": "Cozinha",
-      "peca": "Calca",
-      "tamanho": "M",
-      "estilo": "Unissex",
-      "recebimento": "2026-04-27",
-      "devolucao": "",
-      "obs": ""
-    },
-    {
-      "id": 6,
-      "funcionario": "Joilma Paixão da Hora dos Santos",
-      "departamento": "Cozinha",
-      "peca": "Camisa",
-      "tamanho": "M",
-      "estilo": "Unissex",
-      "recebimento": "2026-04-27",
-      "devolucao": "",
-      "obs": "2 camisetas"
     }
   ],
   "emp_emp1777332327243_funcionarios": [
@@ -316,33 +261,6 @@
       "nascimento": "0008-12-31",
       "admissao": "2026-02-08",
       "cpf": ""
-    },
-    {
-      "id": 2,
-      "nome": "Kyara Silva",
-      "departamento": "Atendimento",
-      "status": "ativo",
-      "nascimento": "2009-08-23",
-      "admissao": "2025-11-05",
-      "cpf": "YHcWHAcKBgpdXUEMZXE="
-    },
-    {
-      "id": 3,
-      "nome": "Taionara Barcelar",
-      "departamento": "Cozinha",
-      "status": "ativo",
-      "nascimento": "2005-07-06",
-      "admissao": "2025-08-09",
-      "cpf": "YHYQHAEDBwpbUkEMZns="
-    },
-    {
-      "id": 4,
-      "nome": "Joilma Paixão da Hora dos Santos",
-      "departamento": "Cozinha",
-      "status": "ativo",
-      "nascimento": "1982-12-10",
-      "admissao": "2026-03-02",
-      "cpf": "ZXcQHAEHAApbVkwMYnI="
     }
   ],
   "emp_emp1777332327243_departamentos": [
@@ -505,9 +423,9 @@
   "emp_emp1777332327243_config": {},
   "emp_emp1777332327243_nid": {
     "dep": 4,
-    "func": 5,
+    "func": 2,
     "peca": 21,
-    "ent": 7
+    "ent": 2
   },
   "emp_emp1777332264087_users": [],
   "emp_emp1777332264087_entregas": [],
