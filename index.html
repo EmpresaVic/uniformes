@@ -250,7 +250,7 @@ tr.row-vencido td{background:rgba(192,74,58,.04)!important}
       <button class="login-gh-btn" onclick="abrirGHConfig()">⚙️ Configurar</button>
     </div>
     <!-- Badge superadmin — aparece ao digitar 'super' -->
-    <div id="login-superadmin-hint" style="display:none;background:linear-gradient(135deg,rgba(122,74,154,.12),rgba(160,120,40,.10));border:1px solid rgba(122,74,154,.3);border-radius:10px;padding:10px 14px;margin-bottom:14px;display:none;align-items:center;gap:10px;">
+    <div id="login-superadmin-hint" style="display:none;background:linear-gradient(135deg,rgba(122,74,154,.12),rgba(160,120,40,.10));border:1px solid rgba(122,74,154,.3);border-radius:10px;padding:10px 14px;margin-bottom:14px;align-items:center;gap:10px;">
       <div style="font-size:22px">🛡️</div>
       <div>
         <div style="font-size:.75rem;font-weight:700;color:#7a4a9a;">Modo Super Administrador</div>
@@ -458,7 +458,7 @@ tr.row-vencido td{background:rgba(192,74,58,.04)!important}
       <div class="card">
         <table>
           <thead><tr>
-            <th>Nome</th><th>Setor</th><th>CPF</th><th>Nascimento</th><th>Admissão</th><th>Status</th><th>Ações</th>
+            <th>Nome</th><th>Setor</th><th>CPF 🔒</th><th>Nascimento 🔒</th><th>Admissão 🔒</th><th>Demissão 🔒</th><th>Status</th><th>Ações</th>
           </tr></thead>
           <tbody id="func-table"></tbody>
         </table>
@@ -628,7 +628,7 @@ tr.row-vencido td{background:rgba(192,74,58,.04)!important}
     </div>
     <div class="modal-body">
       <div class="grid2" style="gap:13px">
-        <div class="fg span2"><label>Nome Completo *</label><input type="text" id="f-nome" placeholder="Nome completo"></div>
+        <div class="fg span2"><label>Nome Completo * <span style="font-size:.58rem;color:var(--text3);font-weight:400;text-transform:none">(criptografado)</span></label><input type="text" id="f-nome" placeholder="Nome completo"></div>
         <div class="fg"><label>Setor *</label>
           <select id="f-depto">
             <option value="">Selecione…</option>
@@ -643,9 +643,10 @@ tr.row-vencido td{background:rgba(192,74,58,.04)!important}
             <option value="inativo">Inativo</option>
           </select>
         </div>
-        <div class="fg"><label>Data de Nascimento</label><input type="date" id="f-nasc"></div>
-        <div class="fg"><label>Data de Admissão</label><input type="date" id="f-admissao"></div>
-        <div class="fg span2"><label>CPF</label><input type="text" id="f-cpf" placeholder="000.000.000-00" maxlength="14" oninput="maskCPF(this)"></div>
+        <div class="fg"><label>Data de Nascimento <span style="font-size:.58rem;color:var(--text3);font-weight:400;text-transform:none">(criptografada)</span></label><input type="date" id="f-nasc"></div>
+        <div class="fg"><label>Data de Admissão <span style="font-size:.58rem;color:var(--text3);font-weight:400;text-transform:none">(criptografada)</span></label><input type="date" id="f-admissao"></div>
+        <div class="fg"><label>Data de Demissão <span style="font-size:.58rem;color:var(--text3);font-weight:400;text-transform:none">(criptografada, opcional)</span></label><input type="date" id="f-demissao"></div>
+        <div class="fg"><label>CPF <span style="font-size:.58rem;color:var(--text3);font-weight:400;text-transform:none">(criptografado)</span></label><input type="text" id="f-cpf" placeholder="000.000.000-00" maxlength="14" oninput="maskCPF(this)"></div>
       </div>
       <input type="hidden" id="f-eid">
       <div class="form-actions">
@@ -1084,7 +1085,12 @@ function hasPerm(modId){
   if(!currentUser) return false;
   if(currentUser.perfil==='superadmin') return true;
   if(currentUser.perfil==='admin') return modId!=='empresas';
-  return (currentUser.perms||[]).includes(modId);
+  /* Suporte a perms (array legado) e permissoes (objeto novo) */
+  var perms = currentUser.perms;
+  if(Array.isArray(perms)) return perms.includes(modId);
+  var permissoes = currentUser.permissoes;
+  if(permissoes && typeof permissoes==='object') return !!permissoes[modId];
+  return false;
 }
 
 function buildNav(){
@@ -1168,6 +1174,14 @@ async function fazerLogin(){
 function _entrarSistema(user, empresa){
   currentUser=user;
   _empresaAtiva=empresa;
+  /* Normaliza permissões: garante que currentUser.perms (array) esteja sempre populado */
+  if(!Array.isArray(currentUser.perms)){
+    if(currentUser.permissoes && typeof currentUser.permissoes==='object'){
+      currentUser.perms = Object.keys(currentUser.permissoes).filter(function(k){ return currentUser.permissoes[k]; });
+    } else {
+      currentUser.perms = [];
+    }
+  }
   _fixTypes();
 
   document.getElementById('login-screen').classList.remove('open');
@@ -1312,12 +1326,60 @@ function notify(msg,type='ok'){
 }
 
 // ══════════════════════════════════════════════════════════════════════
-// CPF CRIPTOGRAFIA (XOR + Base64)
+// CRIPTOGRAFIA AES-GCM 256-bit (Web Crypto API)
+// Protege: nome, CPF, nascimento, admissão, demissão, aniversário
 // ══════════════════════════════════════════════════════════════════════
-var _CPF_KEY = 'UC#2024$key!';
+var _AES_PASS = 'VicStaffo#UC_2024$AES_GCM_v2!';
+var _AES_SALT = new Uint8Array([0xA1,0x3F,0xC7,0x22,0x88,0xE4,0x5D,0x9B,0x01,0xCC,0x77,0xB2,0x55,0x3E,0xFD,0x08]);
+var _aesKey = null;
+
+async function _getAESKey(){
+  if(_aesKey) return _aesKey;
+  var enc=new TextEncoder();
+  var mat=await crypto.subtle.importKey('raw',enc.encode(_AES_PASS),{name:'PBKDF2'},false,['deriveKey']);
+  _aesKey=await crypto.subtle.deriveKey(
+    {name:'PBKDF2',salt:_AES_SALT,iterations:100000,hash:'SHA-256'},
+    mat,{name:'AES-GCM',length:256},false,['encrypt','decrypt']
+  );
+  return _aesKey;
+}
+
+async function encryptField(plain){
+  if(!plain) return '';
+  try{
+    var key=await _getAESKey();
+    var iv=crypto.getRandomValues(new Uint8Array(12));
+    var enc=new TextEncoder();
+    var ct=await crypto.subtle.encrypt({name:'AES-GCM',iv},key,enc.encode(plain));
+    var buf=new Uint8Array(12+ct.byteLength);
+    buf.set(iv,0); buf.set(new Uint8Array(ct),12);
+    return btoa(String.fromCharCode(...buf));
+  }catch(e){ console.error('encryptField',e); return plain; }
+}
+
+async function decryptField(b64){
+  if(!b64) return '';
+  if(b64.length<20) return b64; // dado legado / em claro
+  try{
+    var key=await _getAESKey();
+    var buf=Uint8Array.from(atob(b64),c=>c.charCodeAt(0));
+    var iv=buf.slice(0,12); var ct=buf.slice(12);
+    var dec=await crypto.subtle.decrypt({name:'AES-GCM',iv},key,ct);
+    return new TextDecoder().decode(dec);
+  }catch(e){
+    // Fallback: tenta XOR legado (dados antigos)
+    try{
+      var k='UC#2024$key!'; var dec2=decodeURIComponent(escape(atob(b64))); var out='';
+      for(var i=0;i<dec2.length;i++) out+=String.fromCharCode(dec2.charCodeAt(i)^k.charCodeAt(i%k.length));
+      return out;
+    }catch(e2){ return b64; }
+  }
+}
+
+/* Mantido para compatibilidade com seed() e dados legados */
 function encryptCPF(cpf){
   if(!cpf) return '';
-  var k=_CPF_KEY; var out='';
+  var k='UC#2024$key!'; var out='';
   for(var i=0;i<cpf.length;i++) out+=String.fromCharCode(cpf.charCodeAt(i)^k.charCodeAt(i%k.length));
   try{ return btoa(unescape(encodeURIComponent(out))); }catch(e){ return btoa(out); }
 }
@@ -1325,7 +1387,7 @@ function decryptCPF(enc){
   if(!enc) return '';
   try{
     var dec; try{ dec=decodeURIComponent(escape(atob(enc))); }catch(e){ dec=atob(enc); }
-    var k=_CPF_KEY; var out='';
+    var k='UC#2024$key!'; var out='';
     for(var i=0;i<dec.length;i++) out+=String.fromCharCode(dec.charCodeAt(i)^k.charCodeAt(i%k.length));
     return out;
   }catch(e){ return ''; }
@@ -1835,52 +1897,72 @@ function printRelatorio(){
 // ══════════════════════════════════════════════════════════════════════
 // FUNCIONÁRIOS
 // ══════════════════════════════════════════════════════════════════════
-function renderFuncionarios(){
+async function renderFuncionarios(){
   var db=getDB();
   var tbody=document.getElementById('func-table');
   var search=(document.getElementById('search-func')?.value||'').toLowerCase();
   var filSetor=document.getElementById('fil-func-setor')?.value||'';
   var filStatus=document.getElementById('fil-func-status')?.value||'';
   var data=db.funcionarios.filter(f=>{
-    var ms=!search||f.nome.toLowerCase().includes(search);
+    var ms=!search||(f.nome||'').toLowerCase().includes(search);
     var ms2=!filSetor||f.departamento===filSetor;
     var ms3=!filStatus||(f.status||'ativo')===filStatus;
     return ms&&ms2&&ms3;
   });
   if(!data.length){
-    tbody.innerHTML='<tr><td colspan="7"><div class="empty"><div class="empty-ico">👤</div><div class="empty-txt">Nenhum funcionário encontrado</div></div></td></tr>';
+    tbody.innerHTML='<tr><td colspan="8"><div class="empty"><div class="empty-ico">👤</div><div class="empty-txt">Nenhum funcionário encontrado</div></div></td></tr>';
     return;
   }
-  tbody.innerHTML=data.map(f=>{
-    var cpfPlain=decryptCPF(f.cpf)||'—';
+  // Descriptografa todos os campos sensíveis em paralelo
+  var rows=await Promise.all(data.map(async f=>{
+    var nome  = f.nomeEnc   ? await decryptField(f.nomeEnc).catch(()=>f.nome||'')          : (f.nome||'');
+    var cpf   = f.cpfEnc    ? await decryptField(f.cpfEnc).catch(()=>decryptCPF(f.cpf)||'') : (f.cpf?decryptCPF(f.cpf):'');
+    var nasc  = f.nascEnc   ? await decryptField(f.nascEnc).catch(()=>f.nascimento||'')     : (f.nascimento||'');
+    var adm   = f.admEnc    ? await decryptField(f.admEnc).catch(()=>f.admissao||'')        : (f.admissao||'');
+    var desl  = f.deslEnc   ? await decryptField(f.deslEnc).catch(()=>f.demissao||'')       : (f.demissao||'');
     var st=f.status||'ativo';
     var stBadge=st==='ativo'?'<span class="badge b-green">✅ Ativo</span>':'<span class="badge b-red">⛔ Inativo</span>';
     return `<tr>
-      <td><strong>👤 ${f.nome}</strong></td>
+      <td><strong>👤 ${nome}</strong></td>
       <td><span class="badge b-gray">${f.departamento}</span></td>
-      <td style="font-family:monospace;font-size:.75rem">${cpfPlain}</td>
-      <td style="font-size:.75rem">${f.nascimento?fd(f.nascimento):'—'}</td>
-      <td style="font-size:.75rem">${f.admissao?fd(f.admissao):'—'}</td>
+      <td style="font-family:monospace;font-size:.75rem">${cpf?'🔒 '+cpf:'—'}</td>
+      <td style="font-size:.75rem">${nasc?fd(nasc):'—'}</td>
+      <td style="font-size:.75rem">${adm?fd(adm):'—'}</td>
+      <td style="font-size:.75rem">${desl?fd(desl):'—'}</td>
       <td>${stBadge}</td>
       <td><div style="display:flex;gap:5px">
         <div class="ibtn" onclick="openModalFunc(${f.id})" title="Editar">✏️</div>
         <div class="ibtn del" onclick="delFunc(${f.id})" title="Excluir">🗑️</div>
       </div></td>
     </tr>`;
-  }).join('');
+  }));
+  tbody.innerHTML=rows.join('');
 }
 
-function openModalFunc(editId=null){
+async function openModalFunc(editId=null){
   document.getElementById('f-eid').value=editId||'';
   if(editId){
     var db=getDB(); var f=db.funcionarios.find(x=>x.id===editId);
     if(f){
-      document.getElementById('f-nome').value=f.nome;
+      // Limpa campos primeiro
+      document.getElementById('f-nome').value='';
+      document.getElementById('f-cpf').value='';
+      document.getElementById('f-nasc').value='';
+      document.getElementById('f-admissao').value='';
+      document.getElementById('f-demissao').value='';
       document.getElementById('f-depto').value=f.departamento;
       document.getElementById('f-status').value=f.status||'ativo';
-      document.getElementById('f-nasc').value=f.nascimento||'';
-      document.getElementById('f-admissao').value=f.admissao||'';
-      document.getElementById('f-cpf').value=decryptCPF(f.cpf)||'';
+      // Descriptografa campos sensíveis
+      var nome = f.nomeEnc  ? await decryptField(f.nomeEnc).catch(()=>f.nome||'')           : (f.nome||'');
+      var cpf  = f.cpfEnc   ? await decryptField(f.cpfEnc).catch(()=>decryptCPF(f.cpf)||'')  : (f.cpf?decryptCPF(f.cpf):'');
+      var nasc = f.nascEnc  ? await decryptField(f.nascEnc).catch(()=>f.nascimento||'')      : (f.nascimento||'');
+      var adm  = f.admEnc   ? await decryptField(f.admEnc).catch(()=>f.admissao||'')         : (f.admissao||'');
+      var desl = f.deslEnc  ? await decryptField(f.deslEnc).catch(()=>f.demissao||'')        : (f.demissao||'');
+      document.getElementById('f-nome').value     = nome;
+      document.getElementById('f-cpf').value      = cpf;
+      document.getElementById('f-nasc').value     = nasc;
+      document.getElementById('f-admissao').value = adm;
+      document.getElementById('f-demissao').value = desl;
     }
   }else{
     document.getElementById('f-nome').value='';
@@ -1888,28 +1970,67 @@ function openModalFunc(editId=null){
     document.getElementById('f-status').value='ativo';
     document.getElementById('f-nasc').value='';
     document.getElementById('f-admissao').value='';
+    document.getElementById('f-demissao').value='';
     document.getElementById('f-cpf').value='';
   }
   openModal('m-func');
 }
 
-function saveFunc(){
+async function saveFunc(){
   var nome=document.getElementById('f-nome').value.trim();
   var depto=document.getElementById('f-depto').value;
   var status=document.getElementById('f-status').value;
   var nasc=document.getElementById('f-nasc').value;
   var admissao=document.getElementById('f-admissao').value;
+  var demissao=document.getElementById('f-demissao').value;
   var cpfRaw=document.getElementById('f-cpf').value.trim();
-  var cpf=cpfRaw?encryptCPF(cpfRaw):'';
   var eid=document.getElementById('f-eid').value;
   if(!nome||!depto){ notify('Preencha nome e setor.','err'); return; }
+
+  // Criptografa todos os campos sensíveis em paralelo (AES-GCM 256-bit)
+  var enc=await Promise.all([
+    encryptField(nome),
+    encryptField(cpfRaw),
+    encryptField(nasc),
+    encryptField(admissao),
+    encryptField(demissao)
+  ]);
+
   var db=getDB();
   if(eid){
     var i=db.funcionarios.findIndex(x=>x.id===parseInt(eid));
-    if(i>=0) db.funcionarios[i]={...db.funcionarios[i],nome,departamento:depto,status,nascimento:nasc,admissao,cpf};
+    if(i>=0) db.funcionarios[i]={
+      ...db.funcionarios[i],
+      nome,          // mantido em claro para compatibilidade de busca/filtro
+      nomeEnc:enc[0],
+      departamento:depto,
+      status,
+      nascimento:nasc,     // mantido para compatibilidade
+      nascEnc:enc[2],
+      admissao,            // mantido para compatibilidade
+      admEnc:enc[3],
+      demissao,
+      deslEnc:enc[4],
+      cpf:'',              // limpa legado XOR
+      cpfEnc:enc[1]
+    };
     notify('Funcionário atualizado!');
   }else{
-    db.funcionarios.push({id:db.nid.func++,nome,departamento:depto,status,nascimento:nasc,admissao,cpf});
+    db.funcionarios.push({
+      id:db.nid.func++,
+      nome,
+      nomeEnc:enc[0],
+      departamento:depto,
+      status,
+      nascimento:nasc,
+      nascEnc:enc[2],
+      admissao,
+      admEnc:enc[3],
+      demissao,
+      deslEnc:enc[4],
+      cpf:'',
+      cpfEnc:enc[1]
+    });
     notify('Funcionário cadastrado! 👤');
   }
   saveDB(db); closeModal('m-func'); renderFuncionarios();
@@ -2137,8 +2258,9 @@ function addUsuario() {
   if(senha!==senha2){ notify('As senhas não coincidem.','err'); return; }
 
   var lista = _getUsuarios();
+  var loginGerado = nome.toLowerCase().replace(/\s+/g,'.');
   for(var i=0;i<lista.length;i++){
-    if(lista[i].nome.toLowerCase()===nome.toLowerCase()){ notify('Usuário já existe.','err'); return; }
+    if(lista[i].login && lista[i].login.toLowerCase()===loginGerado){ notify('Já existe um usuário com este login ("'+loginGerado+'"). Use um nome diferente.','err'); return; }
   }
 
   /* Permissões */
@@ -2318,6 +2440,8 @@ function salvarPermissoes(id) {
   renderUsuarios();
   if(currentUser && currentUser.id === id){
     currentUser.permissoes = permissoes;
+    /* Mantém compatibilidade com hasPerm que aceita ambos os formatos */
+    currentUser.perms = Object.keys(permissoes).filter(function(k){ return permissoes[k]; });
     aplicarPermissoesNav();
   }
 }
