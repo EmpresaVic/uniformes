@@ -35,5 +35,11 @@
       "nome": "Victria",
       "end": "Rua"
     }
+  ],
+  "setores": [
+    {
+      "id": "moulj1nd4dn",
+      "nome": "Atendimento"
+    }
   ]
 }
