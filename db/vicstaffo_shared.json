@@ -1,0 +1,13 @@
+{
+  "usuarios": [
+    {
+      "id": "super",
+      "nome": "super",
+      "senhaHash": "-63bd2729",
+      "senhaTemporaria": true,
+      "perfil": "superadmin",
+      "empresas": [],
+      "permissoes": null
+    }
+  ]
+}
