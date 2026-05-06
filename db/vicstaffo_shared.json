@@ -7,6 +7,14 @@
       "perfil": "superadmin",
       "empresas": [],
       "permissoes": null
+    },
+    {
+      "id": "moujn26z5i0",
+      "nome": "admin",
+      "senhaHash": "-39c43b7d",
+      "perfil": "admin",
+      "empresas": [],
+      "permissoes": null
     }
   ]
 }
