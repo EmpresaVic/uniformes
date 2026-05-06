@@ -16,5 +16,17 @@
       "empresas": [],
       "permissoes": null
     }
+  ],
+  "pessoas": [
+    {
+      "id": "moujohanu54",
+      "nome": "joao da silva",
+      "cpfEnc": "",
+      "setor": "Atendimento",
+      "admissao": "2026-05-01",
+      "demissao": "",
+      "status": "ativo",
+      "aniversario": ""
+    }
   ]
 }
