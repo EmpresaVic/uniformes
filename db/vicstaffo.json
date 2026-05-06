@@ -22,6 +22,22 @@
   "usuarios": [
     {
       "id": "super",
+      "nome": "super",
+      "senhaHash": "-13e7bdc3",
+      "perfil": "superadmin",
+      "empresas": [],
+      "permissoes": null
+    },
+    {
+      "id": "moujn26z5i0",
+      "nome": "admin",
+      "senhaHash": "-39c43b7d",
+      "perfil": "admin",
+      "empresas": [],
+      "permissoes": null
+    },
+    {
+      "id": "super",
       "login": "super",
       "nome": "Super Admin",
       "senhaHash": "-63bd2729",
@@ -29,42 +45,6 @@
       "perfil": "superadmin",
       "empresas": [],
       "perms": null
-    },
-    {
-      "id": "u1777332119307",
-      "nome": "victria",
-      "login": "victria",
-      "senhaHash": "56cfd04c",
-      "senha": "victria123",
-      "perfil": "admin",
-      "empresas": [
-        "emp1777332264087"
-      ],
-      "permissoes": {
-        "controle": true,
-        "dashboard": true,
-        "funcionarios": true,
-        "pecas": true,
-        "usuarios": false
-      }
-    },
-    {
-      "id": "u1777334523400",
-      "nome": "victrus",
-      "login": "victrus",
-      "senhaHash": "57811906",
-      "senha": "victrus123",
-      "perfil": "admin",
-      "empresas": [
-        "emp1777332327243"
-      ],
-      "permissoes": {
-        "controle": true,
-        "dashboard": true,
-        "funcionarios": true,
-        "pecas": true,
-        "usuarios": false
-      }
     }
   ],
   "users": [
