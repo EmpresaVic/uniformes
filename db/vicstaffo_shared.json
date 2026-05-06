@@ -3,8 +3,7 @@
     {
       "id": "super",
       "nome": "super",
-      "senhaHash": "-63bd2729",
-      "senhaTemporaria": true,
+      "senhaHash": "-13e7bdc3",
       "perfil": "superadmin",
       "empresas": [],
       "permissoes": null
