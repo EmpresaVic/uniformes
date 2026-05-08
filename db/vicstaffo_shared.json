@@ -38,6 +38,16 @@
       "demissao": "",
       "status": "ativo",
       "aniversario": ""
+    },
+    {
+      "id": "moxj3uyfigh",
+      "nome": "CVP",
+      "cpfEnc": "MDYyLjI0Mi42MjgtOTQ=",
+      "setor": "Gestao",
+      "admissao": "2009-01-01",
+      "demissao": "",
+      "status": "ativo",
+      "aniversario": ""
     }
   ],
   "empresas": [
