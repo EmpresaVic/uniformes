@@ -15,6 +15,17 @@
       "perfil": "admin",
       "empresas": [],
       "permissoes": null
+    },
+    {
+      "id": "moxj1ymovfy",
+      "nome": "adminteste",
+      "senhaHash": "170842",
+      "perfil": "admin",
+      "empresas": [
+        "moul7it0erg",
+        "mouljh7zm5m"
+      ],
+      "permissoes": null
     }
   ],
   "pessoas": [
