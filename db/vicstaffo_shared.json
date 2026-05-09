@@ -26,6 +26,16 @@
         "mouljh7zm5m"
       ],
       "permissoes": null
+    },
+    {
+      "id": "moywfak1h5y",
+      "nome": "victria",
+      "senhaHash": "56cfd04c",
+      "perfil": "admin",
+      "empresas": [
+        "moul7it0erg"
+      ],
+      "permissoes": null
     }
   ],
   "pessoas": [
