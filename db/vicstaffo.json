@@ -621,5 +621,18 @@
     "func": 1,
     "peca": 22,
     "ent": 1
+  },
+  "emp_moul7it0erg_users": [],
+  "emp_moul7it0erg_entregas": [],
+  "emp_moul7it0erg_funcionarios": [],
+  "emp_moul7it0erg_departamentos": [],
+  "emp_moul7it0erg_pecas": [],
+  "emp_moul7it0erg_devolvidos": [],
+  "emp_moul7it0erg_config": {},
+  "emp_moul7it0erg_nid": {
+    "dep": 1,
+    "func": 1,
+    "peca": 1,
+    "ent": 1
   }
 }
