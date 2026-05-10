@@ -37,6 +37,47 @@
       "permissoes": null
     },
     {
+      "id": "moxj1ymovfy",
+      "nome": "adminteste",
+      "senhaHash": "170842",
+      "perfil": "admin",
+      "empresas": [
+        "moul7it0erg",
+        "mouljh7zm5m"
+      ],
+      "permissoes": null
+    },
+    {
+      "id": "moywfak1h5y",
+      "nome": "victria",
+      "senhaHash": "56cfd04c",
+      "perfil": "admin",
+      "empresas": [
+        "moul7it0erg"
+      ],
+      "permissoes": null
+    },
+    {
+      "id": "moywfu76bsc",
+      "nome": "victrus",
+      "senhaHash": "57811906",
+      "perfil": "admin",
+      "empresas": [
+        "mouljh7zm5m"
+      ],
+      "permissoes": null
+    },
+    {
+      "id": "moywgeq4f89",
+      "nome": "victive",
+      "senhaHash": "482d35be",
+      "perfil": "admin",
+      "empresas": [
+        "moxj344wwsa"
+      ],
+      "permissoes": null
+    },
+    {
       "id": "super",
       "login": "super",
       "nome": "Super Admin",
